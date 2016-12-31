@@ -23,7 +23,7 @@ CREATE TABLE utente (
 
 DROP TABLE IF EXISTS prodotto;
 CREATE TABLE prodotto (
-	idProdotto varchar(30) not null,
+	idProdotto int not null AUTO_INCREMENT,
 	urlImmagine varchar(50) ,
 	nome varchar(30) not null,
 	quantita int(15),
@@ -34,7 +34,7 @@ CREATE TABLE prodotto (
 
 DROP TABLE IF EXISTS ordine;
 CREATE TABLE ordine (
-	id int(30) not null AUTO_INCREMENT,
+	id int not null AUTO_INCREMENT,
 	utenteOrdine varchar(30) not null,
 	prezzoTotale double(15,2) ,
 	stato ENUM('Da Spedire','Spedito','Arrivato')not null,
@@ -45,8 +45,8 @@ CREATE TABLE ordine (
 DROP TABLE IF EXISTS prodottiOrdine;
 CREATE TABLE prodottiOrdine (
 	numeroLista int not null AUTO_INCREMENT,
-	idOrdine int(30) not null,
-	idProdottoLista varchar(30) not null,
+	idOrdine int not null,
+	idProdottoLista int not null,
 	numeroProdotto int(10),
 	constraint chiavePrimaria5 PRIMARY KEY (numeroLista),
 	constraint chiaveEsterna3 foreign key (idOrdine) references ordine(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -57,7 +57,7 @@ CREATE TABLE prodottiOrdine (
 DROP TABLE IF EXISTS carrello;
 CREATE TABLE carrello (
 	utenteCarrello varchar(30) not null,
-	idCarrello int(30) not null AUTO_INCREMENT,
+	idCarrello int not null AUTO_INCREMENT,
 	constraint chiavePrimaria7 PRIMARY KEY (idCarrello),
 	constraint chiaveEsterna6 foreign key (utenteCarrello) references utente(username) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -65,8 +65,8 @@ CREATE TABLE carrello (
 DROP TABLE IF EXISTS prodottiCarrello;
 CREATE TABLE prodottiCarrello (
 	numeroSequenza int not null AUTO_INCREMENT,
-	numeroCarrello int(30) not null,
-	idProdottoCarrello varchar(30) not null,
+	numeroCarrello int not null,
+	idProdottoCarrello int not null,
 	numeroProdotto int(10),
 	constraint chiavePrimaria8 PRIMARY KEY (numeroSequenza),
 	constraint chiaveEsterna7 foreign key (numeroCarrello) references carrello(idCarrello) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -85,19 +85,19 @@ values
 
 insert into prodotto (idProdotto,urlImmagine,nome,quantita,descrizione,prezzo)
 values
-('f01','./Immagini/margerita.jpg','margerita','40','la margerita  ......',2.3),
-('f02','./Immagini/geranio.jpg','geranio','40','la geranio  ......',4.1),
-('f03','./Immagini/viola.jpg','viola','40','la viola  ......',1.0),
-('f04','./Immagini/gelsomino.jpg','gelsomino','40','la gelsomino  ......',3.5),
-('f05','./Immagini/gardenia.jpg','gardenia','40','la cardenia ......',6.0),
-('f06','./Immagini/fiordaliso.jpg','fiordaliso','40','la fiordaliso  ......',0.9),
-('f07','./Immagini/ciclamino.jpg','ciclamino','40','la ciclamino  ......',0.50),
-('f08','./Immagini/melo.jpg','melo','40','la melo  ......',9.30),
-('f09','./Immagini/tulipano.jpg','tulipano','40','la tulipano  ......',0.55),
-('f10','./Immagini/boccaLeone.jpg','bocca di leone','40','la bocca di leone  ......',0.20),
-('f11','./Immagini/crisantemo.jpg','crisantemo','40','la crisantemo  ......',0.9),
-('f12','./Immagini/lilium.jpg','lilium','40','la lilium  ......',5.5),
-('f13','./Immagini/rosa.jpg','rosa','40','la rosa  ......',4.4);
+(1,'./Immagini/margerita.jpg','margerita','40','la margerita  ......',2.3),
+(2,'./Immagini/geranio.jpg','geranio','40','la geranio  ......',4.1),
+(3,'./Immagini/viola.jpg','viola','40','la viola  ......',1.0),
+(4,'./Immagini/gelsomino.jpg','gelsomino','40','la gelsomino  ......',3.5),
+(5,'./Immagini/gardenia.jpg','gardenia','40','la cardenia ......',6.0),
+(6,'./Immagini/fiordaliso.jpg','fiordaliso','40','la fiordaliso  ......',0.9),
+(7,'./Immagini/ciclamino.jpg','ciclamino','40','la ciclamino  ......',0.50),
+(8,'./Immagini/melo.jpg','melo','40','la melo  ......',9.30),
+(9,'./Immagini/tulipano.jpg','tulipano','40','la tulipano  ......',0.55),
+(10,'./Immagini/boccaLeone.jpg','bocca di leone','40','la bocca di leone  ......',0.20),
+(11,'./Immagini/crisantemo.jpg','crisantemo','40','la crisantemo  ......',0.9),
+(12,'./Immagini/lilium.jpg','lilium','40','la lilium  ......',5.5),
+(13,'./Immagini/rosa.jpg','rosa','40','la rosa  ......',4.4);
 
 insert into ordine (utenteOrdine,prezzoTotale,stato)
 values
@@ -110,18 +110,18 @@ values
 
 insert into prodottiOrdine (idOrdine,idProdottoLista,numeroProdotto)
 values
-(1,'f10',4),
-(1,'f01',30),
-(2,'f13',51),
-(2,'f12',66),
-(3,'f09',24),
-(3,'f05',12),
-(4,'f08',8),
-(4,'f02',71),
-(5,'f04',20),
-(5,'f04',20),
-(6,'f08',18),
-(6,'f07',18);
+(1,10,4),
+(1,1,30),
+(2,13,51),
+(2,12,66),
+(3,9,24),
+(3,5,12),
+(4,8,8),
+(4,2,71),
+(5,4,20),
+(5,4,20),
+(6,8,18),
+(6,7,18);
 
 insert into carrello(utenteCarrello)
 values
@@ -133,13 +133,13 @@ values
 
 insert into prodottiCarrello(numeroCarrello,idProdottoCarrello,numeroProdotto)
 values
-(1,'f01',4),
-(1,'f02',7),
-(2,'f03',2),
-(2,'f04',6),
-(3,'f05',2),
-(3,'f06',3),
-(4,'f07',11),
-(4,'f08',16),
-(5,'f09',12),
-(5,'f10',15);
+(1,1,4),
+(1,2,7),
+(2,3,2),
+(2,4,6),
+(3,5,2),
+(3,6,3),
+(4,7,11),
+(4,8,16),
+(5,9,12),
+(5,10,15);
