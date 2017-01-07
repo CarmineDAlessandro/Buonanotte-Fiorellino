@@ -10,7 +10,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-
+/**Questa è la classe gestore dell'oggetto "Utente". Si occupa
+ * di effettuare tutte le operazioni sul database relative agli utenti*/
 public class UtentiManager {
 	private static DataSource ds;
 
@@ -27,6 +28,9 @@ public class UtentiManager {
 	}
 
 	// __________________________________________________________________________________________________
+	/**Questo metodo è il metodo di login. Ha come parametri in input le 
+	 * credenziali di un utente, ovvero rispettivamente username e
+	 * password e ritorna l'oggetto utente associato a quelle credenziali*/
 	public Utente loginUtente(String username, String password) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
@@ -68,6 +72,8 @@ public class UtentiManager {
 		return usr;
 	}
 
+	/**Questo metodo permette di eliminare un utente presente nel database.
+	 * Ha come valore in input l'username dell'utente da eliminare*/
 	public void eliminaUtente(String username) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement7 = null;
@@ -93,6 +99,11 @@ public class UtentiManager {
 		}
 
 	}
+	/**Questo metodo permette di modificare i dati di un utente.
+	 * Ha come parametro in input un oggetto Utente contenente 
+	 * tutti i dati modificati. Esso andrà a sostituire nel
+	 * database tutti i dati relativi all'utente avente lo stesso
+	 * username dell'oggetto utente passato in input*/
 	public void ModificaUtente(Utente usr) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement5 = null;
@@ -135,6 +146,8 @@ public class UtentiManager {
 			}
 		} 
 	}
+	/**Questo metodo permette di registrare un nuovo utente.
+	 * Ha come parametro in input l'utente da inserire nel database*/
 	public void registrazioneUtente (Utente usr) throws SQLException {
 		
 			Connection conn = null;
@@ -179,6 +192,11 @@ public class UtentiManager {
 	
 	
 	//__________________
+	/**Questo metodo permette all'amministratore di fare il login.
+	 * Ha come parametri in input l'username e la password che, se 
+	 * corrispondenti al profilo amministratore, faranno ritornare al
+	 * metodo un oggetto Amministratore contenente tutte le informazioni
+	 * relative all'amministratore*/
 	public Amministratore loginAmministratore (String username, String password) throws SQLException{
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;

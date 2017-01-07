@@ -1,4 +1,4 @@
-package carrelloPackage;
+package carrellopackage;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +12,9 @@ import javax.sql.DataSource;
 
 import prodottipackage.Prodotto;
 
+/**Questa classe è il gestore degli oggetti "Carrello".
+ * Si occupa di effettuare tutte le operazioni che coinvolgono il carrello
+ * sul database*/
 public class CarrelloManager {
 	private static DataSource ds;
 
@@ -107,6 +110,9 @@ public class CarrelloManager {
 		}
 	}
 
+	/**Questo metodo aggiunge un prodotto al carrello.
+	 * Vuole come parametri l'id del prodotto da aggiungere e l'username
+	 * dell'utente relativo al carrello*/
 	public void aggiungiProdottoCarrello (String username, int idProdotto) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null,preparedStatement2 = null,preparedStatement3 = null;
@@ -151,6 +157,9 @@ public class CarrelloManager {
 		}
 	}
 	
+	/**Questo metodi elimina un prodotto dal carrello.
+	 * Ha come parametri l'username dell'utente a cui si riferisce il carrello
+	 * e l'id del prodotto da rimuovere*/
 	public void eliminaProdottoCarrello (String username, int idProdotto) throws SQLException  {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null,preparedStatement2 = null;

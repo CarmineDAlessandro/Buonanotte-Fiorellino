@@ -10,7 +10,13 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-public class ProdottoManager {
+
+
+
+/**Questa classe è la classe gestore degli oggetti di tipo "Prodotto".
+ * Si occupa di effettuare tutte le operazioni sul database che 
+ * coinvolgono i prodotti*/
+public class ProdottiManager {
 
 	private static DataSource ds;
 
@@ -26,7 +32,9 @@ public class ProdottoManager {
 		}
 	}
 //_________________________________________________________________________________________
-	public synchronized ArrayList<Prodotto> returnProdotti() throws SQLException {
+	/**Questo metodi ritorna una lista di tutti i prodotti presenti
+	 * nel database*/
+	public ArrayList<Prodotto> returnProdotti() throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
 		ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
@@ -62,7 +70,9 @@ public class ProdottoManager {
 		return lista;
 	}
 //________________________________________________________________________________________________
-	public synchronized void aggiungiProdotto(Prodotto usr) throws SQLException {
+	/**Questo metodo permette di aggiungere un nuovo prodotto nel database.
+	 * Ha come parametro il prodotto da aggiungere nel database*/
+	public void aggiungiProdotto(Prodotto usr) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
 		
@@ -95,7 +105,8 @@ public class ProdottoManager {
 		} 
 	}
 //________________________________________________________________________________________________
-	
+	/**Questo metodo permette di rimuovere un prodotto dal database.
+	 * Ha come parametro l'id del prodotto da rimuovere*/
 	public void eliminaProdotto (int idprodotto) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
@@ -118,7 +129,10 @@ public class ProdottoManager {
 		
 	}
 	//_________________________________________________________________________________________________
-	
+	/**Questo metodo permette di modificare un prodotto nel database.
+	 * Ha come parametro il prodotto modificato che andrà poi a sostituire
+	 * nel database il prodotto avente il medesimo idProdotto.
+	 * */
 	public void ModificaProdotto(Prodotto usr) throws SQLException {
 		Connection conn = null;
 
@@ -156,6 +170,10 @@ public class ProdottoManager {
 	}
 //_________________________________________________________________________________________________
 	//ricerca prezzo minore uguale
+	/**Questo metodo permette di effettuare una ricerca nel database
+	 * in base al prezzo. Ha come parametro in input il prezzo secondo
+	 * cui effettuare la ricerca e come valore di ritorno una lista
+	 * di tutti i prodotto aventi prezzo maggiore o uguale al prezzo in input*/
 	public ArrayList<Prodotto> ricercaNumeroMin(double prezzo) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
@@ -191,7 +209,11 @@ public class ProdottoManager {
 	}
 //_________________________________________________________________________________________________
 	//ricerca prezzo maggiore uguale
-		public ArrayList<Prodotto> ricercaNumeroMax(double prezzo) throws SQLException {
+	/**Questo metodo permette di effettuare una ricerca nel database
+	 * in base al prezzo. Ha come parametro in input il prezzo secondo
+	 * cui effettuare la ricerca e come valore di ritorno una lista
+	 * di tutti i prodotto aventi prezzo minore o uguale al prezzo in input*/	
+	public ArrayList<Prodotto> ricercaNumeroMax(double prezzo) throws SQLException {
 			Connection conn = null;
 			PreparedStatement preparedStatement1 = null;
 			String SQL1 = " select * from prodotto where prezzo >=  ?";
@@ -227,11 +249,14 @@ public class ProdottoManager {
 //_________________________________________________________________________________________________
 	
 	//ricerca per nome (ritorna una lista)
-	
+	/**Questo metodo permette di effettuare una ricerca nel database
+	 * in base al nome. Ha come parametro in input il nome secondo
+	 * cui effettuare la ricerca e come valore di ritorno una lista
+	 * di tutti i prodotto aventi lo stesso nome del nome in input*/
 		public ArrayList<Prodotto> ricercaNome(String nome) throws SQLException {
 			Connection conn = null;
 			PreparedStatement preparedStatement1 = null;
-			String SQL1 = " select * from prodotto where nome >=  ?";
+			String SQL1 = " select * from prodotto where nome =  ?";
 			ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
 			try {
 				conn = ds.getConnection();
