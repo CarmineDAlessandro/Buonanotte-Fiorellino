@@ -6,6 +6,6 @@
 		driverClassName="com.mysql.jdbc.Driver"
 		type="javax.sql.DataSource"
 		username="root"
-		password="admin"
+		password="root"
 		url="jdbc:mysql://localhost:3306/fiorazon"/>
 </Context>
