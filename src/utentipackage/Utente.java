@@ -1,6 +1,6 @@
 package utentipackage;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**Questa è la classe bean dell'utente. Contiene al suo interno tutte
  * le informazioni relative all'utente*/

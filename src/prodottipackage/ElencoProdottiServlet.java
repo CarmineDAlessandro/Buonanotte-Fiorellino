@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ElencoProdottiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	static ProdottoManager model = new ProdottoManager();
+	static ProdottiManager model = new ProdottiManager();
 	
     public ElencoProdottiServlet() {
         super();

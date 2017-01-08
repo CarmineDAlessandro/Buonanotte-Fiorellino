@@ -1,10 +1,10 @@
 package utentipackage;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -34,7 +34,7 @@ public class UtentiManager {
 	public Utente loginUtente(String username, String password) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
-		String selectSQL = "select username from utente where username = ? and password = ?";
+		String selectSQL = "select * from utente where username = ? and password = ?";
 		Utente usr = new Utente();
 		try {
 			conn = ds.getConnection();
@@ -51,12 +51,13 @@ public class UtentiManager {
 				usr.setDataDiNascita(rs.getDate("dataNascita"));
 				usr.setCittaDiNascita(rs.getString("cittaNascita"));
 				usr.setCittaResidenza(rs.getString("cittaResidenza"));
+				usr.setProvincia(rs.getString("Provincia"));
 				usr.setVia(rs.getString("via"));
-				usr.setCittaResidenza(rs.getString("Provincia"));
 				usr.setNumeroCivico(rs.getInt("numeroCivico"));
 				usr.setCap(rs.getString("cap"));
 				usr.setUsername(rs.getString("username"));
 				usr.setPassword(rs.getString("password"));
+				
 			}
 
 		} finally {
@@ -122,7 +123,7 @@ public class UtentiManager {
 								preparedStatement5.setString(2, usr.getCognome());
 								preparedStatement5.setString(3, usr.geteMail());
 								preparedStatement5.setString(4, usr.getCodiceFiscale());
-								preparedStatement5.setDate(5, usr.getDataDiNascita());
+								preparedStatement5.setDate(5,  (java.sql.Date) usr.getDataDiNascita());
 								preparedStatement5.setString(6, usr.getCittaDiNascita());
 								preparedStatement5.setString(7, usr.getProvincia());
 								preparedStatement5.setString(8, usr.getCittaResidenza());
@@ -131,7 +132,7 @@ public class UtentiManager {
 								preparedStatement5.setString(11, usr.getCap());
 								preparedStatement5.setString(12, usr.getPassword());
 								preparedStatement5.setString(13, usr.getUsername());
-									preparedStatement5.execute();
+								preparedStatement5.execute();
 									
 		
 			} finally {
@@ -165,7 +166,8 @@ public class UtentiManager {
 				preparedStatement2.setString(2, usr.getCognome());
 				preparedStatement2.setString(3, usr.geteMail());
 				preparedStatement2.setString(4, usr.getCodiceFiscale());
-				preparedStatement2.setDate(5, usr.getDataDiNascita());
+				java.sql.Date sqlDate = new java.sql.Date(usr.getDataDiNascita().getTime());
+				preparedStatement2.setDate(5, sqlDate);
 				preparedStatement2.setString(6, usr.getCittaDiNascita());
 				preparedStatement2.setString(7, usr.getCittaResidenza());
 				preparedStatement2.setString(8, usr.getProvincia());

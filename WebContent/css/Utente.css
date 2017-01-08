@@ -1,0 +1,28 @@
+@CHARSET "ISO-8859-1";
+
+div#content-studente {
+	background-color: white;
+	marging: 10px 10px 10px 10px;
+	padding: 10px 10px 10px 30px;
+}
+
+
+
+/*mobile*/
+@media screen and (max-width: 840px) {
+	div#content-studente {
+		padding: 5px 5px 5px 5px;
+		background-color: white;
+		font-size:12px;
+		}
+	tr#materie {
+		display:none;
+	}
+	td.cella3 {
+		padding-bottom:20px;
+	
+	}
+	tr#email {
+		display:none;
+	}
+}

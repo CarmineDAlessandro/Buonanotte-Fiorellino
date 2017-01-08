@@ -1,0 +1,55 @@
+@CHARSET "ISO-8859-1";
+
+th {
+	text-align:left;
+}
+div.log-user {
+	float: left;
+	width: 57%;
+	background-color: white;
+	margin: 5px;
+	height: 300px;
+	padding-left: 10px;
+}
+
+div.new-user {
+	float: left;
+	width: 35%;
+	background-color: white;
+	margin: 5px;
+	height: 300px;
+	padding-left: 10px;
+	font-size: 10px;
+	line-height: 3em;
+}
+div#login-page {
+	height: 600px;
+	padding: 20px 20px 20px 20px;
+}
+
+/*mobile*/
+@media screen and (max-width: 840px) {
+	table tr td {
+		display: block;
+	}
+	div.log-user {
+		width: 96%;
+		display: block;
+		margin: 0px 0px 10px 0px;
+		height: auto;
+		float: none;
+	}
+	div.log-user h1 {
+		font-size: 1.5em;
+	}
+	div.new-user {
+		width: 96%;
+		display: block;
+		margin: 0px 0px 10px 0px;
+		height: auto;
+		float: none;
+	}
+	div#login-page {
+		height: auto;
+	}
+}

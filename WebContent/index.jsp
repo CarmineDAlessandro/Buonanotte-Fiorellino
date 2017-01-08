@@ -16,9 +16,8 @@
 		<nav>
 			<ul>
 				<li><a href="index.jsp?IdPage=0">Home</a></li>
-				<li><a href="index.jsp?IdPage=1">Cerca</a></li>
-				<li><a href="index.jsp?IdPage=2"> <%
- 	if (session.getAttribute("studente")== null && session.getAttribute("professore") == null) {
+				<li><a href="index.jsp?IdPage=1"> <%
+ 	if (session.getAttribute("utente")== null) {
  %> Login <%
  	} else {
  %> Utente <%
@@ -26,7 +25,7 @@
  %>
 				</a></li>
 				<li><a href="http://localhost:8080/PROGETTO_PW_INTERO/product">Negozio</a></li>
-				<li><a href="index.jsp?IdPage=4">Fiorazon</a></li>
+				<li><a href="index.jsp?IdPage=3">Fiorazon</a></li>
 			</ul>
 		</nav>
 
@@ -43,7 +42,17 @@
 		<%
 			;
 					break;
-				case 4:
+				case 1:
+		%><%@include file="pages/Login.jsp"%>
+		<%
+			;
+					break;
+				case 2:
+		%><%@include file="pages/Registrazione.jsp"%>
+		<%
+			;
+					break;
+				case 3:
 		%><%@include file="pages/descrizione.jsp"%>
 		<% 
 			;
