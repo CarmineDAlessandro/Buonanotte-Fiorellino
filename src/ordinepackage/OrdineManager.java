@@ -35,14 +35,14 @@ public class OrdineManager {
 	// username ritorna ordini associati amministratore
 	/**Questo metodo ha come valore di ritorno una lista contenente 
 	 * ogni ordine presente nel database*/
-	public ArrayList<Ordine> returnOrdini() throws SQLException {
+	public ArrayList<Ordine> returnOrdiniAmministratore() throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null, preparedStatement2 = null, preparedStatement3 = null;
-		ArrayList<Ordine> lista = new ArrayList<Ordine>();
+		ArrayList<Ordine> listaOrdine = new ArrayList<Ordine>();
 		ArrayList<Prodotto> listaProdotto = new ArrayList<Prodotto>();
 
 		String SQL1 = "select * from Ordine";
-		String SQL2 = "select idProdottoLista,numeroProdotto from prodottiOrdine where idOrdine = ?";
+		String SQL2 = "select idProdottoOrdine,quantit‡ProdottoOrdine,prezzo from prodottiordine where idOrdine = ?";
 		String SQL3 = "select * from prodotto where idProdotto = ?";
 
 		try {
@@ -55,54 +55,54 @@ public class OrdineManager {
 				Ordine ord = new Ordine();
 				ord.setId(rs.getInt("id"));
 				ord.setUtenteOrdine(rs.getString("utenteOrdine"));
-				ord.setPrezzoTotale(rs.getInt("prezzoTotale"));
+				ord.setPrezzoTotale(rs.getDouble("prezzoTotale"));
 				ord.setStato(rs.getString("stato"));
-
-				lista.add(ord);
+				ord.setIban(rs.getString("iban"));
+				listaOrdine.add(ord);
 			}
+				for (Ordine or : listaOrdine) {
+					preparedStatement2 = conn.prepareStatement(SQL2);
+					preparedStatement2.setInt(1, or.getId());
+					ResultSet rst = preparedStatement2.executeQuery();
 
-			for (Ordine or : lista) {
-				preparedStatement2 = conn.prepareStatement(SQL2);
-				preparedStatement2.setInt(1, or.getId());
-				ResultSet rst = preparedStatement2.executeQuery();
+					while (rst.next()) {
+						Prodotto prd = new Prodotto();
+						prd.setIdProdotto(rst.getInt("idProdottoOrdine"));
+						prd.setQuantita(rst.getInt("quantit‡ProdottoOrdine"));
+						prd.setPrezzo(rst.getDouble("prezzo"));
+						// query per informazioni affine prodotto
+						preparedStatement3 = conn.prepareStatement(SQL3);
+						preparedStatement3.setInt(1, prd.getIdProdotto());
+						ResultSet rsx = preparedStatement3.executeQuery();
+						while (rsx.next()) {
+							prd.setUrlImmagine(rsx.getString("urlImmagine"));
+							prd.setNome(rsx.getString("nome"));
+							prd.setDescrizione(rsx.getString("descrizione"));
+					
+						}
 
-				while (rst.next()) {
-					Prodotto prd = new Prodotto();
-					prd.setIdProdotto(rst.getInt("idProdottoLista"));
-					prd.setQuantita(rst.getInt("numeroProdotto"));
-					// query per informazioni affine prodotto
-					preparedStatement3 = conn.prepareStatement(SQL3);
-					preparedStatement3.setInt(1, prd.getIdProdotto());
-					ResultSet rsx = preparedStatement3.executeQuery();
-					while (rsx.next()) {
-						prd.setUrlImmagine(rsx.getString("urlImmagine"));
-						prd.setNome(rsx.getString("nome"));
-						prd.setDescrizione(rsx.getString("descrizione"));
-						prd.setPrezzo(rsx.getInt("prezzo"));
+						// aggiunge prodotto all' array
+						
+						listaProdotto.add(prd);
 					}
-
-					// aggiunge prodotto all array
-					listaProdotto.add(prd);
+					// aggiunge prodotto all' ordine
+					or.setProdotto(listaProdotto);
 				}
-				// aggiunge prodotto all ordine
-				or.setProdotto(listaProdotto);
-			}
 
-		} finally {
-			try {
-				if (preparedStatement1 != null && preparedStatement2 != null && preparedStatement3 != null) {
-					preparedStatement3.close();
-					preparedStatement2.close();
-					preparedStatement1.close();
-				}
 			} finally {
-				if (conn != null)
-					conn.close();
+				try {
+					if (preparedStatement1 != null && preparedStatement2 != null && preparedStatement3 != null) {
+						preparedStatement3.close();
+						preparedStatement2.close();
+						preparedStatement1.close();
+					}
+				} finally {
+					if (conn != null)
+						conn.close();
+				}
 			}
+			return listaOrdine;
 		}
-		return lista;
-	}
-
 	// __________________________________________________________________________________________________
 	// username ritorna ordini associati Utente
 	/**Questo metodo ha come parametro un username riferito ad un utente

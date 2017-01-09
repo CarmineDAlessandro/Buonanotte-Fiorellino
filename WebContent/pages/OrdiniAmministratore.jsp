@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" errorPage="RequestError.jsp"%>
-<%if(request.getSession().getAttribute("utente") != null) {%>
+<%if(request.getSession().getAttribute("amministratore") != null) {%>
 <%
 	ArrayList<Ordine> ordini = (ArrayList<Ordine>) request.getAttribute("ordini");
 	
@@ -22,6 +22,7 @@ div#content-avvenuta {
 <title>Fiorazon</title>
 </head>
 <body>
+aaa
 	<div id="content">
 		<%@include file="../html/header.html"%>
 		<nav>
@@ -60,7 +61,7 @@ div#content-avvenuta {
 					
 						 <% ArrayList<Prodotto> prodotti = o.getProdotto(); %>
 						 <td>
-						 <table>
+						 <table >
 						 <% for (Prodotto p:prodotti) {%>
 						 
 						 	<tr bgcolor="FFFFFF">
@@ -76,10 +77,10 @@ div#content-avvenuta {
 						<td valign="baseline" align="right">&euro;<%= o.getPrezzoTotale() %>
 					
 						<td valign="baseline" align="right"> <%= o.getStato() %>
-						<%if(o.getStato().equalsIgnoreCase("Spedito")){ %>
-						<td>
-							<form action="ControlloConfermaOrdine" method="post">
-							<input type="submit" value="Arrivato a destinazione">
+						<%if(o.getStato().equalsIgnoreCase("Da Spedire")){ %>
+						<td  valign="baseline">
+							<form action="ControlloAvanzamentoOrdine" method="post">
+							<input type="submit" value="Spedito">
 							<input type="hidden" value="<%=o.getId()%>" name="idOrdine">
 							</form>
 						</td>

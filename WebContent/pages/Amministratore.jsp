@@ -24,7 +24,13 @@
 				<th>E-Mail:</th>
 				<td><%=bean.geteMail() %></td>
 			</tr>
-		
+			<tr>
+				<td>
+					<form action="ControlloVisualizzaOrdiniAmministratore" method = "post">
+					<input type="submit" value="Visualizza i tuoi ordini">
+					</form>
+				</td>
+			</tr>
 			
 			</table>
 		</div>
