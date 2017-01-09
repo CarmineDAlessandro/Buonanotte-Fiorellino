@@ -26,7 +26,8 @@
 			</tr>
 		
 			
-		</table>
+			</table>
+		</div>
 <% } else {
 	
 response.sendRedirect("http://localhost:8080/Fiorazon/index.jsp?IdPage=1");

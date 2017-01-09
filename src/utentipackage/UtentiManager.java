@@ -5,6 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -105,47 +110,383 @@ public class UtentiManager {
 	 * tutti i dati modificati. Esso andrà a sostituire nel
 	 * database tutti i dati relativi all'utente avente lo stesso
 	 * username dell'oggetto utente passato in input*/
-	public void ModificaUtente(Utente usr) throws SQLException {
+	public boolean ModificaUtente(String username, String dato, String action) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement5 = null;
-
-		String SQL5 = " UPDATE utente SET nome = ?, cognome = ?, eMail = ?, codiceFiscale = ?,"
-				+ " dataNascita = ?, cittaNascita = ?, provincia = ?,"
-				+ " cittaResidenza = ?, via = ?, numeroCivico = ?,"
-				+ " cap = ?, password = ? WHERE username = ?";
-		
-		try {
-			conn = ds.getConnection();
-			
-							//modifica di utente
-								preparedStatement5 = conn.prepareStatement(SQL5);
-								preparedStatement5.setString(1, usr.getNome());
-								preparedStatement5.setString(2, usr.getCognome());
-								preparedStatement5.setString(3, usr.geteMail());
-								preparedStatement5.setString(4, usr.getCodiceFiscale());
-								preparedStatement5.setDate(5,  (java.sql.Date) usr.getDataDiNascita());
-								preparedStatement5.setString(6, usr.getCittaDiNascita());
-								preparedStatement5.setString(7, usr.getProvincia());
-								preparedStatement5.setString(8, usr.getCittaResidenza());
-								preparedStatement5.setString(9, usr.getVia());
-								preparedStatement5.setInt(10, usr.getNumeroCivico());
-								preparedStatement5.setString(11, usr.getCap());
-								preparedStatement5.setString(12, usr.getPassword());
-								preparedStatement5.setString(13, usr.getUsername());
-								preparedStatement5.execute();
-									
-		
-			} finally {
-			try {
-								if (preparedStatement5 != null ) {
-									preparedStatement5.close();
-									}  
-			} finally {
-				if (conn != null)
-					conn.close();
-				
+		if(dato == null) return false;
+		if (action.equals("nome")) {
+			if (dato.length() > 30) return false;
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isLetter(dato.charAt(i))) {
+					return false; 
+					
+				}
 			}
-		} 
+			String SQL = " UPDATE utente SET nome = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("cognome")) {
+			if (dato.length() > 30) return false;
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isLetter(dato.charAt(i))) {
+					return false; 
+					
+				}
+			}
+			String SQL = " UPDATE utente SET cognome = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("cf")) {
+			if (dato.length() != 16) return false;
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isLetterOrDigit(dato.charAt(i))) {
+					return false; 
+					
+				}
+			}
+			String SQL = " UPDATE utente SET codiceFiscale = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("cittàN")) {
+			if (dato.length() > 40) return false;
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isLetter(dato.charAt(i))) {
+					return false; 
+					
+				}
+			}
+			String SQL = " UPDATE utente SET cittaNascita = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("cittàR")) {
+			if (dato.length() > 40) return false;
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isLetter(dato.charAt(i))) {
+					return false; 
+					
+				}
+			}
+			String SQL = " UPDATE utente SET cittaResidenza = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("cap")) {
+			if (dato.length() != 5) return false;
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isDigit(dato.charAt(i))) {
+					return false; 
+					
+				}
+			}
+			String SQL = " UPDATE utente SET cap = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("eMail")) {
+			if (dato.length() > 30) return false;
+			String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+			if(!dato.matches(emailPattern)) return false;
+			String SQL = " UPDATE utente SET eMail = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("provincia")) {
+			if (dato.length() != 2) return false;
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isLetter(dato.charAt(i))) {
+					return false; 
+					
+				}
+			}
+			String SQL = " UPDATE utente SET provincia = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("via")) {
+			if (dato.length() > 30) return false;
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isLetterOrDigit(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i))) {
+					return false; 
+					
+				}
+			}
+			String SQL = " UPDATE utente SET via = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("civico")) {
+			
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isDigit(dato.charAt(i))) {
+					return false; 
+					
+				}
+			}
+			String SQL = " UPDATE utente SET civico = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("cap")) {
+			if (dato.length() != 5) return false;
+			for (int i=0; i < dato.length(); i ++) {
+				if(!Character.isDigit(dato.charAt(i))) {
+					return false; 
+					
+				}
+			}
+			String SQL = " UPDATE utente SET cap = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("password")) {
+			if (dato.length() >30 ) return false;
+			
+			String SQL = " UPDATE utente SET password = ? WHERE username = ?";
+			try {
+				conn = ds.getConnection();
+				preparedStatement5 = conn.prepareStatement(SQL);
+				preparedStatement5.setString(1, dato);
+				preparedStatement5.setString(2, username);
+				preparedStatement5.execute();
+				return true;
+			} finally {
+				try {
+					if (preparedStatement5 != null ) {
+						preparedStatement5.close();
+						}  
+				} finally {
+					if (conn != null)
+						conn.close();
+	
+				}
+			}
+
+		}
+		if (action.equals("data")) {
+			
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			Date data_nascita = null;
+			try {
+				data_nascita = df.parse(dato);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				String SQL = " UPDATE utente SET dataNascita = ? WHERE username = ?";
+				try {
+					conn = ds.getConnection();
+					preparedStatement5 = conn.prepareStatement(SQL);
+					java.sql.Date sqlDate = new java.sql.Date(data_nascita.getTime());
+					preparedStatement5.setDate(1, sqlDate);
+					preparedStatement5.setString(2, username);
+					preparedStatement5.execute();
+					return true;
+				} finally {
+					try {
+						if (preparedStatement5 != null ) {
+							preparedStatement5.close();
+							}  
+					} finally {
+						if (conn != null)
+							conn.close();
+		
+					}
+				}
+	
+		}
+		return false;
+		
 	}
 	/**Questo metodo permette di registrare un nuovo utente.
 	 * Ha come parametro in input l'utente da inserire nel database*/

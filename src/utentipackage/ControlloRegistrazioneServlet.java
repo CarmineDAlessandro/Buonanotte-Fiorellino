@@ -99,7 +99,7 @@ public class ControlloRegistrazioneServlet extends HttpServlet {
 		String via = request.getParameter("via");
 		if(via.length() > 30) flag = false;
 		for (int i=0; i < via.length(); i ++) {
-			if(!Character.isLetterOrDigit(via.charAt(i))) {
+			if(!Character.isLetterOrDigit(via.charAt(i)) && !Character.isWhitespace(via.charAt(i))) {
 				flag = false;
 			}
 		}

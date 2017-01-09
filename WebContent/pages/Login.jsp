@@ -12,7 +12,7 @@
 			<h1>Sei già registrato?</h1>
 			<h3>Se sei un utente, accedi qui</h3>
 			<form action="ControlloLoginUtenteServlet" method="post">
-			<input type="hidden" name ="studente" value="studente">
+			<input type="hidden" name ="utente" value="utente">
 			
 				<table>
 					<tr>
@@ -37,7 +37,7 @@
 		<div class="new-user">
 			<h1>Sei un nuovo cliente?</h1>
 			<h3>
-				<a href="index.jsp?IdPage=5">Registrati qui</a>
+				<a href="index.jsp?IdPage=2">Registrati qui</a>
 			</h3>
 		</div>
 		<div class="log-user">
@@ -79,6 +79,11 @@
 	<% if(response.getStatus() == HttpServletResponse.SC_UNAUTHORIZED) { %>
 			<script>
 				alert("Username e/o password errati.");
+			</script>
+			<% } %>
+	<% if(response.getStatus() == HttpServletResponse.SC_ACCEPTED) { %>
+			<script>
+				alert("Modifica avvenuta con successo. La preghiamo di effettuare nuovamente il login");
 			</script>
 			<% } %>
 	

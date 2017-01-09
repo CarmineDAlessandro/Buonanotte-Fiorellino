@@ -1,6 +1,5 @@
 package utentipackage;
 
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -10,61 +9,53 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class ControlloLoginUtenteServlet
+ * Servlet implementation class ControlloModificaDatiUtentiServlet
  */
-@WebServlet("/ControlloLoginUtenteServlet")
-public class ControlloLoginUtenteServlet extends HttpServlet {
+@WebServlet("/ControlloModificaDatiUtentiServlet")
+public class ControlloModificaDatiUtentiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControlloLoginUtenteServlet() {
+    public ControlloModificaDatiUtentiServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 * Metodo che permette il login dell'utente.
+	 * Modifica un dato a scelta dell'utente.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-	
+		String dato = request.getParameter("dato");
+		String action = request.getParameter("action");
+		Utente usr = (Utente) request.getSession().getAttribute("utente");
+		String username = usr.getUsername();
 		
-		String user = request.getParameter("user");
-		String password = request.getParameter("password");
-		
-		if (request.getParameter("utente") != null) {
-			
 		UtentiManager model = new UtentiManager();
-			
-			if (user != null && password != null) {
-				HttpSession session = request.getSession();
-				session.removeAttribute("utente");
-				try {
+		
+		if( dato != null && action != null && username != null) {
+			try {
+				boolean flag = model.ModificaUtente(username, dato, action);
+				if(flag) {
+					response.setStatus(HttpServletResponse.SC_ACCEPTED);
+					request.getSession().removeAttribute("utente");
 					
-					session.setAttribute("utente", model.loginUtente(user,password));
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-			}
-			Utente bean = (Utente) request.getSession().getAttribute("utente");
-			
-			if (bean.getUsername() == null) {
-				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				request.getSession().removeAttribute("utente");
+				else {
+					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+				}
+				RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp?IdPage=1");
+				dispatcher.forward(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
-		
-		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp?IdPage=1");
-		dispatcher.forward(request, response);
-	
 	}
 
 	/**

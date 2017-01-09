@@ -17,7 +17,7 @@
 			<ul>
 				<li><a href="index.jsp?IdPage=0">Home</a></li>
 				<li><a href="index.jsp?IdPage=1"> <%
- 	if (session.getAttribute("utente")== null) {
+ 	if (session.getAttribute("utente")== null && session.getAttribute("amministratore") == null) {
  %> Login <%
  	} else {
  %> Utente <%

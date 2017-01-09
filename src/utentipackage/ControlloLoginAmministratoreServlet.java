@@ -28,6 +28,7 @@ public class ControlloLoginAmministratoreServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Metodo che permette il login dell'amministratore.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -41,7 +42,7 @@ public class ControlloLoginAmministratoreServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.removeAttribute("amministratore");
 				try {
-					System.out.println(user+password);
+					
 					session.setAttribute("amministratore", model.loginAmministratore(user,password));
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
