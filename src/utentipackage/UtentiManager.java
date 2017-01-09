@@ -121,20 +121,14 @@ public class UtentiManager {
 		if (dato == null)
 			return false;
 		if (action.equals("nome")) {
-<<<<<<< HEAD
+
 			if (dato.length() > 30)
 				return false;
 			for (int i = 0; i < dato.length(); i++) {
-				if (!Character.isLetter(dato.charAt(i))) {
+				if (!Character.isLetter(dato.charAt(i))&& !Character.isWhitespace(dato.charAt(i))) {
 					return false;
-
-=======
-			if (dato.length() > 30) return false;
-			for (int i=0; i < dato.length(); i ++ ) {
-				if(!Character.isLetter(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i))) {
-					return false; 
 					
->>>>>>> 1260574286d638698ae749d9382f0f0145d8dbc3
+
 				}
 			}
 			String SQL = " UPDATE utente SET nome = ? WHERE username = ?";
@@ -159,21 +153,13 @@ public class UtentiManager {
 
 		}
 		if (action.equals("cognome")) {
-<<<<<<< HEAD
-			if (dato.length() > 30)
-				return false;
-			
-			for (int i = 0; i < dato.length(); i++) {
-				if (!Character.isLetter(dato.charAt(i))) {
-					return false;
 
-=======
 			if (dato.length() > 30) return false;
 			for (int i=0; i < dato.length(); i ++) {
 				if(!Character.isLetter(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i)) && dato.charAt(i) !='\'') {
 					return false; 
 					
->>>>>>> 1260574286d638698ae749d9382f0f0145d8dbc3
+
 				}
 			}
 			String SQL = " UPDATE utente SET cognome = ? WHERE username = ?";
@@ -228,20 +214,13 @@ public class UtentiManager {
 
 		}
 		if (action.equals("citt‡N")) {
-<<<<<<< HEAD
-			if (dato.length() > 40)
-				return false;
-			for (int i = 0; i < dato.length(); i++) {
-				if (!Character.isLetter(dato.charAt(i))) {
-					return false;
 
-=======
 			if (dato.length() > 40) return false;
 			for (int i=0; i < dato.length(); i ++) {
 				if(!Character.isLetter(dato.charAt(i)) && dato.charAt(i)!='\'') {
 					return false; 
 					
->>>>>>> 1260574286d638698ae749d9382f0f0145d8dbc3
+
 				}
 			}
 			String SQL = " UPDATE utente SET cittaNascita = ? WHERE username = ?";
@@ -266,20 +245,13 @@ public class UtentiManager {
 
 		}
 		if (action.equals("citt‡R")) {
-<<<<<<< HEAD
-			if (dato.length() > 40)
-				return false;
-			for (int i = 0; i < dato.length(); i++) {
-				if (!Character.isLetter(dato.charAt(i))) {
-					return false;
 
-=======
 			if (dato.length() > 40) return false;
 			for (int i=0; i < dato.length(); i ++) {
 				if(!Character.isLetter(dato.charAt(i)) && dato.charAt(i)!='\'') {
 					return false; 
 					
->>>>>>> 1260574286d638698ae749d9382f0f0145d8dbc3
+
 				}
 			}
 			String SQL = " UPDATE utente SET cittaResidenza = ? WHERE username = ?";
@@ -391,20 +363,12 @@ public class UtentiManager {
 
 		}
 		if (action.equals("via")) {
-<<<<<<< HEAD
-			if (dato.length() > 30)
-				return false;
-			for (int i = 0; i < dato.length(); i++) {
-				if (!Character.isLetterOrDigit(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i))) {
-					return false;
 
-=======
 			if (dato.length() > 30) return false;
 			for (int i=0; i < dato.length(); i ++) {
 				if(!Character.isLetterOrDigit(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i)) && dato.charAt(i)!= '\'' && dato.charAt(i)!='.') {
 					return false; 
 					
->>>>>>> 1260574286d638698ae749d9382f0f0145d8dbc3
 				}
 			}
 			String SQL = " UPDATE utente SET via = ? WHERE username = ?";

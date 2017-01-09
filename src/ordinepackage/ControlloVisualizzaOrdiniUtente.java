@@ -30,6 +30,7 @@ public class ControlloVisualizzaOrdiniUtente extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Metodo che permette la visualizzazione degli ordini.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub

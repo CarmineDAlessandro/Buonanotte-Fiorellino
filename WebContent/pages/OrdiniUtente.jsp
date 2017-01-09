@@ -38,7 +38,7 @@ div#content-avvenuta {
 				<li><a href="index.jsp?IdPage=3">Descrizione</a></li>
 			</ul>
 		</nav>
-		<%@page import="java.util.ArrayList"%>
+		<%@page import="java.util.ArrayList" %>
 		<%@page import="ordinepackage.Ordine"%>
 		<%@page import="prodottipackage.Prodotto"%>
 		<div id="ordini">

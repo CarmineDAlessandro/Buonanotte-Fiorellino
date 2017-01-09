@@ -1,5 +1,7 @@
 package ordinepackage;
 
+
+
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -27,6 +29,7 @@ public class ControlloConfermaOrdine extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * Metodo che conferma l'arrivo di un ordine.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
