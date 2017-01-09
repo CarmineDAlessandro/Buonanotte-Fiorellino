@@ -1,0 +1,24 @@
+@CHARSET "ISO-8859-1";
+
+div.registrazione {
+	background-color: white;
+	padding: 5px 10px 10px 30px;
+	margin: 10px 10px 10px 10px;
+}
+
+/*mobile*/
+@media screen and (max-width: 840px) {
+	
+	div.registrazione {
+		background-color: white;
+		padding: 2px 5px 5px 5px;
+		
+		
+	}
+}
+
+@media screen and (max-width: 400px) {
+		td {
+			display: block;
+		}
+	}

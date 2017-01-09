@@ -8,6 +8,9 @@
 	<form action="ControlloLogoutUtenteServlet" method="post">
 	<input type="submit" value ="Logout">
 	</form>
+	<form action="ControlloCancellazioneUtenteServlet" method="post">
+	<input type="submit" value="Elimina il tuo profilo utente">
+	</form>
 	<div id="content-studente">
 		<h1>Benvenuto nella tua Pagina Utente</h1>
 		<h2>Informazioni Personali</h2>

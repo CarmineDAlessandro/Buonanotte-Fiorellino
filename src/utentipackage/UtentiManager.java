@@ -14,14 +14,14 @@ import javax.sql.DataSource;
  * di effettuare tutte le operazioni sul database relative agli utenti*/
 public class UtentiManager {
 	private static DataSource ds;
-
+	
 	static {
 		try {
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
 			ds = (DataSource) envCtx.lookup("jdbc/fiorazon");
-
+			
 		} catch (NamingException e) {
 			System.out.println("Error:" + e.getMessage());
 		}
@@ -149,48 +149,60 @@ public class UtentiManager {
 	}
 	/**Questo metodo permette di registrare un nuovo utente.
 	 * Ha come parametro in input l'utente da inserire nel database*/
-	public void registrazioneUtente (Utente usr) throws SQLException {
+	public boolean registrazioneUtente (Utente usr) throws SQLException {
 		
-			Connection conn = null;
-			PreparedStatement  preparedStatement2 = null;
+		Connection conn = null;
+		Connection conn2 = null;
+		PreparedStatement  preparedStatement2 = null;
+		PreparedStatement provaStatement = null;
+		String insertSQL = "insert into utente (nome,cognome,eMail,codiceFiscale,dataNascita,"
+				+ "cittaNascita,cittaResidenza,provincia,via,numeroCivico,cap,username,password)"
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String provaSQL ="SELECT username FROM utente WHERE username = ?";
+		try {
+			conn2 = ds.getConnection();
+			provaStatement = conn2.prepareStatement(provaSQL);
+			provaStatement.setString(1, usr.getUsername());
+			ResultSet rs = provaStatement.executeQuery();
+			if(!rs.next()) {
+			conn = ds.getConnection();
+
+			preparedStatement2 = conn.prepareStatement(insertSQL);
+			preparedStatement2.setString(1, usr.getNome());
+			preparedStatement2.setString(2, usr.getCognome());
+			preparedStatement2.setString(3, usr.geteMail());
+			preparedStatement2.setString(4, usr.getCodiceFiscale());
+			java.sql.Date sqlDate = new java.sql.Date(usr.getDataDiNascita().getTime());
+			preparedStatement2.setDate(5, sqlDate);
+			preparedStatement2.setString(6, usr.getCittaDiNascita());
+			preparedStatement2.setString(7, usr.getCittaResidenza());
+			preparedStatement2.setString(8, usr.getProvincia());
+			preparedStatement2.setString(9, usr.getVia());
+			preparedStatement2.setInt(10, usr.getNumeroCivico());
+			preparedStatement2.setString(11, usr.getCap());
+			preparedStatement2.setString(12, usr.getUsername());
+			preparedStatement2.setString(13, usr.getPassword());
 			
-			String insertSQL = "insert into utente (nome,cognome,eMail,codiceFiscale,dataNascita,"
-					+ "cittaNascita,cittaResidenza,provincia,via,numeroCivico,cap,username,password)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			
+			preparedStatement2.executeUpdate();
+			return true;
+		}	else return false;
+		} finally {
 			try {
-				conn = ds.getConnection();
-
-				preparedStatement2 = conn.prepareStatement(insertSQL);
-				preparedStatement2.setString(1, usr.getNome());
-				preparedStatement2.setString(2, usr.getCognome());
-				preparedStatement2.setString(3, usr.geteMail());
-				preparedStatement2.setString(4, usr.getCodiceFiscale());
-				java.sql.Date sqlDate = new java.sql.Date(usr.getDataDiNascita().getTime());
-				preparedStatement2.setDate(5, sqlDate);
-				preparedStatement2.setString(6, usr.getCittaDiNascita());
-				preparedStatement2.setString(7, usr.getCittaResidenza());
-				preparedStatement2.setString(8, usr.getProvincia());
-				preparedStatement2.setString(9, usr.getVia());
-				preparedStatement2.setInt(10, usr.getNumeroCivico());
-				preparedStatement2.setString(11, usr.getCap());
-				preparedStatement2.setString(12, usr.getUsername());
-				preparedStatement2.setString(13, usr.getPassword());
-				
-				preparedStatement2.executeUpdate();
-
-			} finally {
-				try {
-					if ( preparedStatement2 != null) {
-						preparedStatement2.close();
-					}
-				} finally {
-					if (conn != null)
-						conn.close();
+				if ( preparedStatement2 != null) {
+					preparedStatement2.close();
 				}
-			} 
-		
-	}
+				if ( provaStatement != null) {
+					provaStatement.close();
+				}
+			} finally {
+				if (conn != null)
+					conn.close();
+			}
+				if (conn2 != null)
+					conn2.close();
+		} 
+	
+}
 	
 	
 	//__________________
@@ -202,7 +214,7 @@ public class UtentiManager {
 	public Amministratore loginAmministratore (String username, String password) throws SQLException{
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
-		String selectSQL = "select username from amministratore where username = ? and password = ?";
+		String selectSQL = "select * from amministratore where username = ? and password = ?";
 		Amministratore usr = new Amministratore();
 		try {
 			conn = ds.getConnection();
