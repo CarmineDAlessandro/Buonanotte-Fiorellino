@@ -22,19 +22,16 @@ public class ElencoProdottiServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String jsp = null;
-		ArrayList<Prodotto> elenco = new ArrayList<Prodotto>();
 		
 		try {
-			elenco = model.returnProdotti();
-			jsp = "/Catalogo.jsp";
-			request.getSession().setAttribute("Elenco", elenco);
+			request.setAttribute("lista", model.returnProdotti());
 		} catch(SQLException e) {
-			jsp = "/DatabaseErrore.jsp";
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(jsp);
+		RequestDispatcher dispatcher = getServletContext().
+				getRequestDispatcher("pages/Negozio.jsp");
 		dispatcher.forward(request, response);
 	}
 
