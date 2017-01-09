@@ -116,8 +116,8 @@ public class UtentiManager {
 		if(dato == null) return false;
 		if (action.equals("nome")) {
 			if (dato.length() > 30) return false;
-			for (int i=0; i < dato.length(); i ++) {
-				if(!Character.isLetter(dato.charAt(i))) {
+			for (int i=0; i < dato.length(); i ++ ) {
+				if(!Character.isLetter(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i))) {
 					return false; 
 					
 				}
@@ -146,7 +146,7 @@ public class UtentiManager {
 		if (action.equals("cognome")) {
 			if (dato.length() > 30) return false;
 			for (int i=0; i < dato.length(); i ++) {
-				if(!Character.isLetter(dato.charAt(i))) {
+				if(!Character.isLetter(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i)) && dato.charAt(i) !='\'') {
 					return false; 
 					
 				}
@@ -204,7 +204,7 @@ public class UtentiManager {
 		if (action.equals("cittàN")) {
 			if (dato.length() > 40) return false;
 			for (int i=0; i < dato.length(); i ++) {
-				if(!Character.isLetter(dato.charAt(i))) {
+				if(!Character.isLetter(dato.charAt(i)) && dato.charAt(i)!='\'') {
 					return false; 
 					
 				}
@@ -233,7 +233,7 @@ public class UtentiManager {
 		if (action.equals("cittàR")) {
 			if (dato.length() > 40) return false;
 			for (int i=0; i < dato.length(); i ++) {
-				if(!Character.isLetter(dato.charAt(i))) {
+				if(!Character.isLetter(dato.charAt(i)) && dato.charAt(i)!='\'') {
 					return false; 
 					
 				}
@@ -345,7 +345,7 @@ public class UtentiManager {
 		if (action.equals("via")) {
 			if (dato.length() > 30) return false;
 			for (int i=0; i < dato.length(); i ++) {
-				if(!Character.isLetterOrDigit(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i))) {
+				if(!Character.isLetterOrDigit(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i)) && dato.charAt(i)!= '\'' && dato.charAt(i)!='.') {
 					return false; 
 					
 				}

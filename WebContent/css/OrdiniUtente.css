@@ -1,0 +1,43 @@
+div#ordini {
+	width: auto;
+	margin: auto 10px auto 10px;
+	padding: 5px 5px 5px 20px;
+}
+
+table {
+	background-color: #ffb833;
+}
+th {
+	border-bottom: 1px solid black;
+	padding-right: 20px;
+	
+}
+
+div#nessuno {
+	width: auto;
+	margin: auto 10px auto 10px;
+	padding: 5px 5px 30px 20px;
+	max-height: 10px;
+	background-color: #ffb833;
+	font-size: 30px;
+	font-weight: bold;
+}
+/*mobile*/
+@media screen and (max-width: 840px) {
+	
+	div#ordini {
+		font-size:12px;
+		margin:5px 5px 5px 5px;
+		padding:5px 5px 5px 5px;
+		
+	
+	}
+	div#nessuno {
+		font-size:12px;
+		max-height:30px;
+	
+	}
+	
+}
+
+

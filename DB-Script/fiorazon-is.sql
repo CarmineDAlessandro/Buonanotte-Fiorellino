@@ -1,7 +1,7 @@
 
-drop database IF EXISTS  fiorazonIs;
-create database fiorazonIs;
-use fiorazonIs;
+drop database IF EXISTS  fiorazon;
+create database fiorazon;
+use fiorazon;
 
 
 CREATE TABLE utente (
@@ -56,6 +56,7 @@ CREATE TABLE prodottiOrdine (
 	idOrdine int not null,
 	idProdottoOrdine int not null,
 	quantitàProdottoOrdine int,
+	prezzo int,
     constraint chiavePrimaria5 primary key (idOrdine, idProdottoOrdine),
 	constraint chiaveEsterna3 foreign key (idOrdine) references ordine(id) ON DELETE CASCADE ON UPDATE CASCADE,
 	constraint chiaveEsterna4 foreign key (idProdottoOrdine) references prodotto(idProdotto) ON DELETE CASCADE ON UPDATE CASCADE 
@@ -114,20 +115,20 @@ values
 ('carmelosottile',26.7,'Spedito'),
 ('carmelosottile',77.7,'Da Spedire');
 
-insert into prodottiOrdine (idOrdine,idProdottoOrdine,quantitàProdottoOrdine)
+insert into prodottiOrdine (idOrdine,idProdottoOrdine,quantitàProdottoOrdine,prezzo)
 values
-(1,10,4),
-(1,1,30),
-(2,13,51),
-(2,12,66),
-(3,9,24),
-(3,5,12),
-(4,8,8),
-(4,2,71),
-(5,4,20),
-(5,5,20),
-(6,8,18),
-(6,7,18);
+(1,10,4,10),
+(1,1,30,10),
+(2,13,51,10),
+(2,12,66,10),
+(3,9,24,10),
+(3,5,12,10),
+(4,8,8,10),
+(4,2,71,10),
+(5,4,20,5),
+(5,5,20,5),
+(6,8,18,5),
+(6,7,18,5);
 
 
 insert into carrello(numeroCarrello, usernameCarrello)

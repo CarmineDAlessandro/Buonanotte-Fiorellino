@@ -161,6 +161,15 @@
 				 	<input type="submit" value="Modifica">
 				 </form>
 				 </td>
+			</tr>
+			<tr>
+				<td>
+					<form action="ControlloVisualizzaOrdiniUtente" method = "post">
+					<input type="hidden" name="username" value="<%=bean.getUsername() %>">
+					<input type="submit" value="Visualizza i tuoi ordini">
+					</form>
+				</td>
+			</tr>
 		</table>
 		</div>
 		<% if(response.getStatus() == HttpServletResponse.SC_FORBIDDEN) { %>

@@ -111,11 +111,11 @@ public class OrdineManager {
 	public ArrayList<Ordine> returnOrdiniUtente(String username) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null, preparedStatement2 = null, preparedStatement3 = null;
-		ArrayList<Ordine> lista = new ArrayList<Ordine>();
+		ArrayList<Ordine> listaOrdine = new ArrayList<Ordine>();
 		ArrayList<Prodotto> listaProdotto = new ArrayList<Prodotto>();
-
+	
 		String SQL1 = "select * from Ordine where utenteOrdine = ?";
-		String SQL2 = "select idProdottoLista,numeroProdotto from prodottiOrdine where idOrdine = ?";
+		String SQL2 = "select idProdottoOrdine,quantit‡ProdottoOrdine,prezzo from prodottiordine where idOrdine = ?";
 		String SQL3 = "select * from prodotto where idProdotto = ?";
 
 		try {
@@ -129,21 +129,22 @@ public class OrdineManager {
 				Ordine ord = new Ordine();
 				ord.setId(rs.getInt("id"));
 				ord.setUtenteOrdine(rs.getString("utenteOrdine"));
-				ord.setPrezzoTotale(rs.getInt("prezzoTotale"));
+				ord.setPrezzoTotale(rs.getDouble("prezzoTotale"));
 				ord.setStato(rs.getString("stato"));
-
-				lista.add(ord);
+				ord.setIban(rs.getString("iban"));
+				listaOrdine.add(ord);
 			}
-
-			for (Ordine or : lista) {
+			
+			for (Ordine or : listaOrdine) {
 				preparedStatement2 = conn.prepareStatement(SQL2);
 				preparedStatement2.setInt(1, or.getId());
 				ResultSet rst = preparedStatement2.executeQuery();
 
 				while (rst.next()) {
 					Prodotto prd = new Prodotto();
-					prd.setIdProdotto(rst.getInt("idProdottoLista"));
-					prd.setQuantita(rst.getInt("numeroProdotto"));
+					prd.setIdProdotto(rst.getInt("idProdottoOrdine"));
+					prd.setQuantita(rst.getInt("quantit‡ProdottoOrdine"));
+					prd.setPrezzo(rst.getDouble("prezzo"));
 					// query per informazioni affine prodotto
 					preparedStatement3 = conn.prepareStatement(SQL3);
 					preparedStatement3.setInt(1, prd.getIdProdotto());
@@ -152,13 +153,14 @@ public class OrdineManager {
 						prd.setUrlImmagine(rsx.getString("urlImmagine"));
 						prd.setNome(rsx.getString("nome"));
 						prd.setDescrizione(rsx.getString("descrizione"));
-						prd.setPrezzo(rsx.getInt("prezzo"));
+				
 					}
 
-					// aggiunge prodotto all array
+					// aggiunge prodotto all' array
+					
 					listaProdotto.add(prd);
 				}
-				// aggiunge prodotto all ordine
+				// aggiunge prodotto all' ordine
 				or.setProdotto(listaProdotto);
 			}
 
@@ -174,7 +176,7 @@ public class OrdineManager {
 					conn.close();
 			}
 		}
-		return lista;
+		return listaOrdine;
 	}
 
 	// __________________________________________________________________________________________________
@@ -184,6 +186,7 @@ public class OrdineManager {
 	public void avanzaStato(String Stato, int idOrdine) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
+		
 		String SQL1 = "update ordine set stato = ? where id = ? ";
 		try {
 			conn = ds.getConnection();

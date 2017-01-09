@@ -41,7 +41,7 @@ public class ControlloRegistrazioneServlet extends HttpServlet {
 		String nome = request.getParameter("nome");
 		if (nome.length() > 30) flag = false;
 		for (int i=0; i < nome.length(); i ++) {
-			if(!Character.isLetter(nome.charAt(i))) {
+			if(!Character.isLetter(nome.charAt(i)) && !Character.isWhitespace(nome.charAt(i))) {
 				flag = false; 
 				
 			}
@@ -49,7 +49,7 @@ public class ControlloRegistrazioneServlet extends HttpServlet {
 		String cognome = request.getParameter("cognome");
 		if (cognome.length() > 30) flag = false;
 		for (int i=0; i < cognome.length(); i ++) {
-			if(!Character.isLetter(cognome.charAt(i))) {
+			if(!Character.isLetter(cognome.charAt(i))&& !Character.isWhitespace(cognome.charAt(i)) && cognome.charAt(i) !='\'') {
 				flag = false;
 				
 			}
@@ -66,7 +66,7 @@ public class ControlloRegistrazioneServlet extends HttpServlet {
 		String città_nascita = request.getParameter("cittàN");
 		if(città_nascita.length() > 40) flag = false;
 		for (int i=0; i < città_nascita.length(); i ++) {
-			if(!Character.isLetter(città_nascita.charAt(i))) {
+			if(!Character.isLetter(città_nascita.charAt(i)) && !Character.isWhitespace(città_nascita.charAt(i)) && città_nascita.charAt(i)!='\'') {
 				flag = false;
 				
 			}
@@ -74,7 +74,7 @@ public class ControlloRegistrazioneServlet extends HttpServlet {
 		String città_residenza = request.getParameter("cittàR");
 		if(città_residenza.length() > 40) flag = false;
 		for (int i=0; i < città_residenza.length(); i ++) {
-			if(!Character.isLetter(città_residenza.charAt(i))) {
+			if(!Character.isLetter(città_residenza.charAt(i)) && !Character.isWhitespace(città_residenza.charAt(i)) && città_residenza.charAt(i)!='\'') {
 				flag = false;
 			}
 		}
@@ -99,7 +99,7 @@ public class ControlloRegistrazioneServlet extends HttpServlet {
 		String via = request.getParameter("via");
 		if(via.length() > 30) flag = false;
 		for (int i=0; i < via.length(); i ++) {
-			if(!Character.isLetterOrDigit(via.charAt(i)) && !Character.isWhitespace(via.charAt(i))) {
+			if(!Character.isLetterOrDigit(via.charAt(i)) && !Character.isWhitespace(via.charAt(i)) && via.charAt(i)!= '\'' && via.charAt(i)!='.') {
 				flag = false;
 			}
 		}
