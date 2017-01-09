@@ -33,7 +33,7 @@ public class ControlloRicercaProdottiNomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (request.getParameter("nome") != null) {
-			String nome = (String) request.getAttribute("nome");
+			String nome = request.getParameter("nome");
 			request.removeAttribute("nome");
 
 			ProdottiManager model = new ProdottiManager();
