@@ -21,6 +21,7 @@
  %> Utente <%
  	}
  %></a></li>
+				<li><a href="index.jsp?IdPage=8">Negozio</a></li>
 				<li><a href="index.jsp?IdPage=3">Fiorazon</a></li>
 			</ul>
 		</nav>

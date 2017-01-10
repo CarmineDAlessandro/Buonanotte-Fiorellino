@@ -14,9 +14,9 @@ import utentipackage.Utente;
 import utentipackage.UtentiManager;
 
 /**
- * Servlet implementation class EliminaProdottoServlet
+ * Servlet implementation class ControlloEliminaProdottoServlet
  */
-@WebServlet("/EliminaProdottoServlet")
+@WebServlet("/ControlloEliminaProdottoServlet")
 public class ControlloEliminaProdottoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -34,7 +34,7 @@ public class ControlloEliminaProdottoServlet extends HttpServlet {
 	 *	parametro "idProdotto"
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("idProdotto"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		ProdottiManager model = new ProdottiManager();
 		try {
 			model.eliminaProdotto(id);
@@ -42,10 +42,10 @@ public class ControlloEliminaProdottoServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		request.removeAttribute("idProdotto");
+		request.removeAttribute("id");
 		
 		RequestDispatcher dispatcher = getServletContext().
-				getRequestDispatcher("/pages/Negozio.jsp");
+				getRequestDispatcher("/index.jsp?IdPage=8");
 		dispatcher.forward(request, response);	
 	}
 

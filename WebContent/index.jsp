@@ -24,7 +24,7 @@
  	}
  %>
 				</a></li>
-				<li><a href="http://localhost:8080/PROGETTO_PW_INTERO/product">Negozio</a></li>
+				<li><a href="index.jsp?IdPage=8">Negozio</a></li>
 				<li><a href="index.jsp?IdPage=3">Fiorazon</a></li>
 			</ul>
 		</nav>
@@ -54,6 +54,16 @@
 					break;
 				case 3:
 		%><%@include file="pages/descrizione.jsp"%>
+		<% 
+			;
+				break;
+				case 8:
+		%><%@include file="pages/Negozio.jsp"%>
+		<% 
+			;
+				break;
+				case 9:
+		%><%@include file="pages/ModificaProdotto.jsp"%>	
 		<% 
 			;
 				break;

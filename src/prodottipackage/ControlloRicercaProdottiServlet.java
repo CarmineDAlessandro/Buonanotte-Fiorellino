@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ControlloRicercaProdottiPrezzoServlet
  */
-@WebServlet("/ControlloRicercaProdottiPrezzoServlet")
-public class ControlloRicercaProdottiPrezzoServlet extends HttpServlet {
+@WebServlet("/ControlloRicercaProdottiServlet")
+public class ControlloRicercaProdottiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControlloRicercaProdottiPrezzoServlet() {
+    public ControlloRicercaProdottiServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,7 +30,10 @@ public class ControlloRicercaProdottiPrezzoServlet extends HttpServlet {
 	 * Questo metodo permette la ricerca dei prodotti per prezzo
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int prezzoMin = 0, prezzoMax = 0;
+		String action = request.getParameter("action");
+		request.removeAttribute("action");
+		if(action.equals("prezzo")) {
+		int prezzoMin = -1, prezzoMax = -1;
 		if (request.getParameter("prezzoMin") != null) {
 			prezzoMin = Integer.parseInt(request.getParameter("prezzoMin"));
 			request.removeAttribute("prezzoMin");
@@ -40,7 +43,7 @@ public class ControlloRicercaProdottiPrezzoServlet extends HttpServlet {
 		}
 		
 		ProdottiManager model = new ProdottiManager ();
-		if (prezzoMin != 0) {
+		if (prezzoMin != -1) {
 			
 			try {
 				request.setAttribute("lista", model.ricercaNumeroMin(prezzoMin));
@@ -48,10 +51,8 @@ public class ControlloRicercaProdottiPrezzoServlet extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			}
 			
-			RequestDispatcher dispatcher = getServletContext().
-					getRequestDispatcher("/pages/Negozio.jsp");
-			dispatcher.forward(request, response);	
-		} else if (prezzoMax != 0) {
+			
+		} else if (prezzoMax != -1) {
 			
 			try {
 				request.setAttribute("lista", model.ricercaNumeroMax(prezzoMax));
@@ -59,14 +60,27 @@ public class ControlloRicercaProdottiPrezzoServlet extends HttpServlet {
 				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			}
 			
-			RequestDispatcher dispatcher = getServletContext().
-					getRequestDispatcher("/pages/Negozio.jsp");
-			dispatcher.forward(request, response);	
-		} else {
-			RequestDispatcher dispatcher = getServletContext().
-					getRequestDispatcher("/ElencoProdottiServlet");
-			dispatcher.forward(request, response);	
+				
+		} 
 		}
+		
+		if(action.equals("nome")) {
+			String nome = request.getParameter("nome");
+			request.removeAttribute("nome");
+			
+			ProdottiManager model = new ProdottiManager();
+			try {
+				
+				request.setAttribute("lista", model.ricercaNome(nome));
+			} catch (SQLException e) {
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+			}
+			/* fa il redirect sulla pagina della lista dei prodotti */
+			
+		}
+		RequestDispatcher dispatcher = getServletContext().
+				getRequestDispatcher("/index.jsp?IdPage=8");
+		dispatcher.forward(request, response);
 	}
 
 	/**

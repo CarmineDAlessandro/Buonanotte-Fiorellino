@@ -5,50 +5,34 @@
 
 <%
 	/*l'amministratore*/
-	Amministratore admin = (Amministratore) request.getSession().getAttribute("admin");
-
+	Amministratore admin = (Amministratore) request.getSession().getAttribute("amministratore");
 	/*la lista dei prodotti che andrà visualizzata*/
 	ArrayList<Prodotto> products = (ArrayList<Prodotto>) request.getAttribute("lista");
-
 	/*il carrello*/
 	//	Cart cart = (Cart) request.getSession().getAttribute("cart");
+	/*l'utente*/
+	Utente user = (Utente) request.getSession().getAttribute("utente");
 %>
 <!DOCTYPE html>
 <html>
 <head>
-<head>
-<link href="../css/Negozio.css" rel="stylesheet" type="text/css">
-<link href="../css/common-layout.css" type="text/css" rel="stylesheet">
+
+<style type="text/css">
+	.giallo {background-color: #FFFF00;}
+</style>
 <%@ page import="java.util.*,prodottipackage.*,utentipackage.*"%>
 <title>Fiorazon</title>
 </head>
 <body>
-	<!-- intestazione e menu -->
-	<%@include file="../html/header.html"%>
-		<nav>
-			<ul>
-				<li><a href="index.jsp?IdPage=0">Home</a></li>
-				<li><a href="index.jsp?IdPage=1"> <%
- 	if (session.getAttribute("utente")== null && session.getAttribute("amministratore") == null) {
- 	%> Login <%
- 		} else {
- 	%> Utente <%
- 		}
- 	%>
-				</a></li>
-				<li><a href="http://localhost:8080/PROGETTO_PW_INTERO/product">Negozio</a></li>
-				<li><a href="index.jsp?IdPage=3">Fiorazon</a></li>
-			</ul>
-		</nav>
 
 
 	<!-- ricerca dei prodotti -->
-	<h4>Effettua una ricerca per prezzo oppure per nome</h4>
-	<div>
+	<h4 class="giallo">Effettua una ricerca per prezzo oppure per nome</h4>
+	<div class="giallo">
 		<table>
 		
-		<form action="ControlloRicercaProdottiNomeServlet" method="post">
-			
+		<form action="ControlloRicercaProdottiServlet" method="post">
+		<input type="hidden" name="action" value="nome">	
 				<tr>
 					<td>
 						<label for="nome">Nome:</label>
@@ -63,8 +47,8 @@
 			
 		</form>
 	
-		<form action="ControlloRicercaProdottiPrezzoServlet" method="post">
-			
+		<form action="ControlloRicercaProdottiServlet" method="post">
+		<input type="hidden" name="action" value="prezzo">	
 				<tr>
 					<td>
 						<label for="prezzoMin">Prezzo minimo:</label>
@@ -79,8 +63,8 @@
 			
 		</form>
 	
-		<form action="ControlloRicercaProdottiPrezzoServlet" method="post">
-			
+		<form action="ControlloRicercaProdottiServlet" method="post">
+		<input type="hidden" name="action" value="prezzo">		
 				<tr>
 					<td>
 						<label for="prezzoMax">Prezzo massimo:</label>
@@ -99,14 +83,14 @@
 
 	<!-- la lista dei prodotti -->
 	
-	<div id="lista">
+	<div id="lista" class="giallo">
 		<table>
 
 			<%
 				if (products != null && products.size() > 0) {
 			%>
 			<tr>
-
+				<th>Immagine</th>
 				<th>Nome</th>
 				<th>Descrizione</th>
 				<th>Prezzo</th>
@@ -117,22 +101,30 @@
 				for (Prodotto p : products) {
 			%>
 			<tr>
-
+				<td><img src="<%=p.getUrlImmagine()%>" alt="Immagine non disponibile" height="82" width="82"></td>
 				<td><%=p.getNome()%></td>
 				<td><%=p.getDescrizione()%></td>
 				<td><%=p.getPrezzo()%></td>
 				<td>
 					<%
 						if (admin != null) {
-					%> <a
-					href="ControlloEliminaProdottoServlet&idProdotto=
-								<%=p.getIdProdotto()%>">Cancella</a><br>
-					<a href="ModificaProdotto.jsp?idProdotto=<%=
-						p.getIdProdotto()%>">Modifica</a><br>
-					<% } %>
+					%> <form action="ControlloEliminaProdottoServlet" method="post">
+						<input type="submit" value="Elimina prodotto">
+						<input type="hidden" name="id" value=<%=p.getIdProdotto()%>>
+						</form>
+						<form action="index.jsp?IdPage=9" method="post">
+						<input type="submit" value="Modifica prodotto">
+						<input type="hidden" name="id" value=<%=p.getIdProdotto()%>>
+						</form>		
+					
+					<% } else if(user != null){%>
  					<!-- Per aggiungere il prodotto al carrello --> <a
 					href="product?action=addC&id=<%=p.getIdProdotto()%>">Aggiungi
 						al carrello</a>
+						<%} else {%>
+							<a href="index.jsp?IdPage=1">Effettua il login 
+							per aggiungere al carrello</a>
+						<% } %>
 				</td>
 
 			</tr>
@@ -141,17 +133,18 @@
 				} else {
 			%>
 			<tr>
-				<td colspan="6px">Non ci sono prodotti da mostrare</td>
+				<td colspan="6px">Non ci sono prodotti da mostrare!</td>
 			</tr>
-			<tr>
-				<td colspan="6px"><a href="ElencoProdottiServlet">Clicca
-						qui per la lista</a></td>
-
-
-			</tr>
+			
 			<%
 				}
 			%>
+			<tr>
+				<td colspan="6px"><a href="ElencoProdottiServlet">Clicca
+						qui per la lista completa.</a></td>
+
+
+			</tr>
 		</table>
 
 
@@ -162,9 +155,13 @@
 		%>
 		<div id="insert">
 			<h4>Inserisci un nuovo prodotto</h4>
-			<form action="ControlloInerisciProdottoServlet" method="post">
+			<form action="ControlloInserisciProdottoServlet" method="post" ENCTYPE="multipart/form-data">
 
 				<table id="table-insert">
+					<tr>
+						<td><label for="immagine">Immagine:</label></td>
+						<td><input name="img" type="file" required></td>
+					</tr>
 					<tr>
 						<td><label for="nome">Nome:</label></td>
 						<td><input name="nome" type="text"  required
@@ -201,9 +198,6 @@
 	</div>
 
 
-
-	<%@include file="../html/footer.html"%>
-
 	<!-- script per gli errori dovuti alle precondizioni sbagliate
 	HttpServletResponse.SC_PRECONDITION_FAILED
 		e per le SQLException, che generano una
@@ -223,5 +217,6 @@
 	<%
 		}
 	%>
+	
 </body>
 </html>

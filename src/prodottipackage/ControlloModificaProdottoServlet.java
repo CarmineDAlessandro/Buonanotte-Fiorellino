@@ -32,12 +32,12 @@ public class ControlloModificaProdottoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String dato = request.getParameter("dato");
 		String action = request.getParameter("action");
-		int idProdotto = Integer.parseInt(request.getParameter("idProdotto"));
+		int idProdotto = Integer.parseInt(request.getParameter("id"));
 		boolean flag = true;
 		
 		request.removeAttribute("dato");
 		request.removeAttribute("action");
-		request.removeAttribute("idProdotto");
+		request.removeAttribute("id");
 		
 		if (dato != null && action != null && idProdotto != 0) {
 			ProdottiManager model = new ProdottiManager ();
@@ -56,7 +56,7 @@ public class ControlloModificaProdottoServlet extends HttpServlet {
 		}
 		
 		RequestDispatcher dispatcher = getServletContext().
-				getRequestDispatcher("/pages/Negozio.jsp");
+				getRequestDispatcher("/index.jsp?IdPage=8");
 		dispatcher.forward(request, response);
 	}
 

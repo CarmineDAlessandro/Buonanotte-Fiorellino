@@ -24,7 +24,7 @@ public class ProdottiManager {
 			Context initCtx = new InitialContext();
 			Context envCtx = (Context) initCtx.lookup("java:comp/env");
 
-			ds = (DataSource) envCtx.lookup("jdbc/fiorazonis");
+			ds = (DataSource) envCtx.lookup("jdbc/fiorazon");
 
 		} catch (NamingException e) {
 			System.out.println("Error:" + e.getMessage());
@@ -41,7 +41,7 @@ public class ProdottiManager {
 		ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
 
 		String SQL1 = "select * from prodotto";
-
+		
 		try {
 			conn = ds.getConnection();
 			preparedStatement1 = conn.prepareStatement(SQL1);
@@ -68,6 +68,7 @@ public class ProdottiManager {
 					conn.close();
 			}
 		}
+		
 		return lista;
 	}
 
@@ -80,7 +81,7 @@ public class ProdottiManager {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
 
-		String SQL1 = "insert into prodotto (urlImmagine,nome,quantita,descrizione,prezzo)values (?,?,?,?,?,?)";
+		String SQL1 = "insert into prodotto (urlImmagine,nome,quantita,descrizione,prezzo)values (?,?,?,?,?)";
 
 		// manca metodo per prendere immagine
 		String url = "./Immagini/";
@@ -88,7 +89,7 @@ public class ProdottiManager {
 			conn = ds.getConnection();
 
 			preparedStatement1 = conn.prepareStatement(SQL1);
-			preparedStatement1.setString(1, url);
+			preparedStatement1.setString(1, usr.getUrlImmagine());
 			preparedStatement1.setString(2, usr.getNome());
 			preparedStatement1.setInt(3, usr.getQuantita());
 			preparedStatement1.setString(4, usr.getDescrizione());
@@ -151,8 +152,10 @@ public class ProdottiManager {
 			if (nome.length() > 30)
 				flag = false;
 			for (int i = 0; i < nome.length(); i++) {
-				if (!(Character.isWhitespace(nome.charAt(i))
-						||Character.isLetter(nome.charAt(i)))) {
+				if (!Character.isLetter(nome.charAt(i))&& 
+						!Character.isWhitespace(nome.charAt(i)) && 
+						nome.charAt(i) !='\'' &&
+						!Character.isDigit(nome.charAt(i))) {
 					flag = false;
 				}
 			}
@@ -189,12 +192,7 @@ public class ProdottiManager {
 			
 			if (descrizione.length() > 300)
 				flag = false;
-			for (int i = 0; i <descrizione.length(); i++) {
-				if (!(Character.isWhitespace(descrizione.charAt(i))
-						||Character.isLetter(descrizione.charAt(i)))) {
-					flag = false;
-				}
-			}
+		
 			
 			if (flag == true) {
 				try {
@@ -286,6 +284,33 @@ public class ProdottiManager {
 				
 				return flag;
 			}
+		} else if(action.equals("img")) {
+			try {
+				conn = ds.getConnection();
+				String url = dato;
+				SQL = "UPDATE prodotto SET urlImmagine = ? WHERE idProdotto = ?";
+				
+				preparedStatement = conn.prepareStatement(SQL);
+
+				preparedStatement.setString(1, url);
+				preparedStatement.setInt(2, idProdotto);
+				
+				preparedStatement.executeUpdate();
+
+			} finally {
+				try {
+					if (preparedStatement != null) {
+						preparedStatement.close();
+					}
+				} finally {
+					if (conn != null)
+						conn.close();
+
+				}
+			}
+			
+			return flag;
+			
 		}
 
 		return false;
@@ -302,7 +327,7 @@ public class ProdottiManager {
 	public ArrayList<Prodotto> ricercaNumeroMin(double prezzo) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
-		String SQL1 = " select * from prodotto where prezzo <=  ?";
+		String SQL1 = " select * from prodotto where prezzo >=  ?";
 		ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
 		try {
 			conn = ds.getConnection();
@@ -344,7 +369,7 @@ public class ProdottiManager {
 	public ArrayList<Prodotto> ricercaNumeroMax(double prezzo) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
-		String SQL1 = " select * from prodotto where prezzo >=  ?";
+		String SQL1 = " select * from prodotto where prezzo <=  ?";
 		ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
 		try {
 			conn = ds.getConnection();

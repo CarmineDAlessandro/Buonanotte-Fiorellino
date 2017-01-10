@@ -9,23 +9,7 @@
 <title>Fiorazon</title>
 </head>
 <body>
-<!-- intestazione e menu -->
-	<%@include file="../html/header.html"%>
-		<nav>
-			<ul>
-				<li><a href="index.jsp?IdPage=0">Home</a></li>
-				<li><a href="index.jsp?IdPage=1"> <%
- 	if (session.getAttribute("utente")== null && session.getAttribute("amministratore") == null) {
- 	%> Login <%
- 		} else {
- 	%> Utente <%
- 		}
- 	%>
-				</a></li>
-				<li><a href="http://localhost:8080/PROGETTO_PW_INTERO/product">Negozio</a></li>
-				<li><a href="index.jsp?IdPage=3">Fiorazon</a></li>
-			</ul>
-		</nav>
+
 
 	<div id="form-modifica" 
 		style=" background-color:white;">
@@ -34,7 +18,7 @@
 		<tr>
 		<form action="ControlloModificaProdottoServlet" method="post">
 		<input type="hidden" name="action" value="nome">
-		<input type="hidden" name="idProdotto" value="<%=request.getParameter("idProdotto")%>">
+		<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
 			<tr>
 				<td>
 					<label for="dato">Nome:</label>
@@ -53,7 +37,7 @@
 		<tr>
 		<form action="ControlloModificaProdottoServlet" method="post">
 		<input type="hidden" name="action" value="descrizione">
-		<input type="hidden" name="idProdotto" value="<%=request.getParameter("idProdotto")%>">
+		<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
 			<tr>
 				<td>
 					<label for="dato">Descrizione:</label>
@@ -70,7 +54,7 @@
 		<tr>
 		<form action="ControlloModificaProdottoServlet" method="post">
 		<input type="hidden" name="action" value="prezzo">
-		<input type="hidden" name="idProdotto" value="<%=request.getParameter("idProdotto")%>">
+		<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
 			<tr>
 				<td>
 					<label for="dato">Prezzo:</label>
@@ -87,7 +71,7 @@
 		<tr>
 		<form action="ControlloModificaProdottoServlet" method="post">
 		<input type="hidden" name="action" value="quantità">
-		<input type="hidden" name="idProdotto" value="<%=request.getParameter("idProdotto")%>">
+		<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
 			<tr>
 				<td>
 					<label for="dato">Quantità:</label>
@@ -100,9 +84,24 @@
 				</td>
 			</tr>
 		</form>
+		<form action="ControlloModificaProdottoServlet" method="post">
+		<input type="hidden" name="action" value="img">
+		<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+			<tr>
+				<td>
+					<label for="dato">Immagine:</label>
+				</td>
+				<td>
+					<input name="dato" type="file" required>
+				</td>
+				<td>
+					<input type="submit" value="Modifica">
+				</td>
+			</tr>
+		</form>
 		<tr>
 		</table>
 	</div>
-	<%@include file="../html/footer.html"%>
+	
 </body>
 </html>

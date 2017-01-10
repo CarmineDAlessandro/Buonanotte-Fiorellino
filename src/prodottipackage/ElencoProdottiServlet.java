@@ -30,8 +30,7 @@ public class ElencoProdottiServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher dispatcher = getServletContext().
-				getRequestDispatcher("pages/Negozio.jsp");
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp?IdPage=8");
 		dispatcher.forward(request, response);
 	}
 

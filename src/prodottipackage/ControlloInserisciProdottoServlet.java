@@ -41,13 +41,17 @@ public class ControlloInserisciProdottoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean flag = true;
+		String img = request.getParameter("img");
 		
+		request.removeAttribute("img");
 		String nome = request.getParameter("nome");
 		if (nome.length() > 30)
 			flag = false;
 		for (int i = 0; i < nome.length(); i++) {
-			if (!(Character.isWhitespace(nome.charAt(i))
-					||Character.isLetter(nome.charAt(i)))) {
+			if (!Character.isLetter(nome.charAt(i))&& 
+					!Character.isWhitespace(nome.charAt(i)) && 
+					nome.charAt(i) !='\'' &&
+					!Character.isDigit(nome.charAt(i))) {
 				flag = false;
 			}
 		} request.removeAttribute("nome");
@@ -55,12 +59,8 @@ public class ControlloInserisciProdottoServlet extends HttpServlet {
 		String descrizione = request.getParameter("descrizione");
 		if (descrizione.length() > 300)
 			flag = false;
-		for (int i = 0; i < descrizione.length(); i++) {
-			if (!(Character.isWhitespace(descrizione.charAt(i))
-					||Character.isLetter(descrizione.charAt(i)))) {
-				flag = false;
-			}
-		} request.removeAttribute("descrizione");
+	 request.removeAttribute("descrizione");
+	 
 
 		int prezzo = Integer.parseInt(request.getParameter("prezzo"));
 		if (prezzo < 0)
@@ -77,7 +77,7 @@ public class ControlloInserisciProdottoServlet extends HttpServlet {
 		bean.setNome(nome);
 		bean.setPrezzo(prezzo);
 		bean.setQuantita(quantita);
-		/*manca l'url Immagine*/
+		bean.setUrlImmagine(img);
 
 		ProdottiManager model = new ProdottiManager();
 		if (flag) {
@@ -88,18 +88,20 @@ public class ControlloInserisciProdottoServlet extends HttpServlet {
 				response.setStatus(HttpServletResponse.
 						SC_INTERNAL_SERVER_ERROR);
 				RequestDispatcher dispatcher = getServletContext().
-						getRequestDispatcher("/Pages/Negozio.jsp");
+						getRequestDispatcher("/index.jsp?IdPage=8");
 				dispatcher.forward(request, response);	
+				return;
 			}
 			/*arriva qui se è andato tutto bene*/
 			RequestDispatcher dispatcher = getServletContext().
-					getRequestDispatcher("/pages/Negozio.jsp");
-			dispatcher.forward(request, response);	
+					getRequestDispatcher("/index.jsp?IdPage=8");
+			dispatcher.forward(request, response);
+			return;
 		}
 		/*arriva qui se ci sono parametri formalmente scorretti*/
 		response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED);
 		RequestDispatcher dispatcher = getServletContext().
-				getRequestDispatcher("/pages/Negozio.jsp");
+				getRequestDispatcher("/index.jsp?IdPage=8");
 		dispatcher.forward(request, response);	
 	}
 

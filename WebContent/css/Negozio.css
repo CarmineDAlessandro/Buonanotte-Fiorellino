@@ -1,0 +1,153 @@
+@CHARSET "ISO-8859-1";
+
+th {
+	text-align: left;
+}
+div#shop {
+	margin: 10px 5px 5px 5px;
+}
+
+div#shop header {
+	background-color: orange;
+	color: yellow;
+	height: 80px;
+}
+
+div#shop header h1 {
+	font-size: 3em;
+	margin: auto auto auto 20px;
+}
+
+div#shop div#content-shop div#details {
+	background-color: orange;
+	margin: 5px 5px 5px 5px;
+	padding-left: 20px;
+}
+
+div#necessario {
+	margin: 10px 10px 10px 10px;
+	background-color: #ffff80;
+	padding: 5px 5px 5px 5px;
+	min-height: 110px;
+}
+
+div#necessario div#lista {
+	margin: 5px 5px 5px 5px;
+	width: 60%;
+	display: inline;
+}
+
+div#necessario div#carrello {
+	margin: 5px 5px 5px 5px;
+	background-color: orange;
+	float: right; 
+	width : 30%;
+	padding-left: 5px;
+	overflow-x: auto;
+	overflow-y: auto;
+	max-height: 400px;
+}
+
+div#necessario div#carrello p {
+	text-align: center;
+}
+
+div#necessario div#carrello table tr td a {
+	font-weight: bold;
+	color: red;
+	decoration: none;
+}
+
+div#necessario div#carrello table tr td a:visited {
+	color: red;
+}
+
+div#necessario div#carrello h3 {
+	text-align: center;
+}
+
+div#shop div#insert {
+	background-color: #ffffb3;
+	margin: 10px 15px 10px 15px;
+	padding: 0px 10px 10px 20px;
+}
+
+div#shop div#insert h1 {
+	color: orange;
+}
+
+div#shop footer {
+	background-color: orange;
+	margin: 5px 5px 5px 5px;
+}
+
+div#shop footer h1 {
+	color: yellow;
+	margin: auto auto auto 20px;
+	display: inline;
+}
+
+div#shop footer p {
+	display: inline;
+}
+
+div#shop footer p a {
+	color: yellow;
+	text-decoration: none;
+}
+
+div#shop footer p a:visited {
+	color: yellow;
+}
+
+div#shop footer p a:hover {
+	color: #ffff80;
+}
+
+div#admin-access-form {
+	background-color: yellow;
+	padding: 10px 10px 10px 10px
+}
+
+/*mobile*/
+@media screen and (max-width: 840px) {
+	div#necessario div#carrello {
+		display: block;
+		float: none;
+		width: auto;
+	}
+	div#necessario div#lista {
+		display: block;
+		width: 100%;
+	}
+	div#shop header h1 {
+		font-size: 2.5em;
+		margin: auto auto auto auto;
+		text-align: center;
+	}
+	div#shop footer h1 {
+		color: yellow;
+		margin: auto auto auto auto;
+		display: block;
+		font-size: 1.5em;
+		text-align: center;
+	}
+	div#shop footer p {
+		display: block;
+		text-align: center;
+	}
+	table#table-insert tr td {
+		display: block;
+	}
+	div#shop div#insert {
+		margin: 10px 15px 10px 15px;
+		padding: 0px 5px 10px 10px;
+	}
+	div#shop div#insert h1 {
+		font-size: 1.2em;
+		text-align: center;
+	}
+	.dont-show-if-mobile {
+		display: none;
+	}
+}
