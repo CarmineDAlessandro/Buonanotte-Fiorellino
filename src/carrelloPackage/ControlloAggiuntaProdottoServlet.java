@@ -11,44 +11,48 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class RimuoviProdottoCarrelloServlet
+ * Servlet implementation class ControlloAggiuntaProdottoServlet
  */
-@WebServlet("/RimuoviProdottoCarrelloServlet")
-public class RimuoviProdottoCarrelloServlet extends HttpServlet {
+@WebServlet("/ControlloAggiuntaProdottoServlet")
+public class ControlloAggiuntaProdottoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RimuoviProdottoCarrelloServlet() {
+    public ControlloAggiuntaProdottoServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 * Metodo per il cambio di quantit‡ di un prodotto nel carrello.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String idProdotto = request.getParameter("idProdotto");
-		String idCarrelloS = request.getParameter("idCarrello");
-		request.removeAttribute("idProdotto");
-		request.removeAttribute("idCarrello");
-		
-		int idCarrello = Integer.parseInt(idCarrelloS);
-		
+		String username = request.getParameter("username");
+		String idProdottoS = request.getParameter("id");
+		int idProdotto = Integer.parseInt(idProdottoS);
+		String quantit‡S = request.getParameter("quantit‡");
+		int quantit‡ = Integer.parseInt(quantit‡S);
+		request.removeAttribute("username");
+		request.removeAttribute("id");
+		request.removeAttribute("quantit‡");
 		CarrelloManager model = new CarrelloManager();
-		
-			try {
-				model.eliminaProdottoCarrello(idCarrello, idProdotto);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		try {
+			boolean flag=model.aggiungiProdottoCarrello(username, idProdotto, quantit‡);
+			if(!flag) {
+				
+				response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+				
 			}
-	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		RequestDispatcher dispatcher = null;
-		dispatcher = getServletContext().getRequestDispatcher("/index.jsp?IdPage=10");
+		dispatcher = getServletContext().getRequestDispatcher("/index.jsp?IdPage=8");
+		
 		dispatcher.forward(request, response);
 	}
 

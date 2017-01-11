@@ -24,7 +24,7 @@ div#content-avvenuta {
 				<li><a href="index.jsp?IdPage=0">Home</a></li>
 				
 				<li><a href="index.jsp?IdPage=1">Login</a></li>
-				<li><a href="pages\Negozio.jsp">Negozio</a></li>
+				<li><a href="index.jsp?IdPage=8">Catalogo</a></li>
 				<li><a href="index.jsp?IdPage=3">Descrizione</a></li>
 			</ul>
 		</nav>

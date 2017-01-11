@@ -35,7 +35,9 @@ public class ControlloModificaDatiUtentiServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		Utente usr = (Utente) request.getSession().getAttribute("utente");
 		String username = usr.getUsername();
-		
+		request.removeAttribute("dato");
+		request.removeAttribute("action");
+		request.removeAttribute("utente");
 		UtentiManager model = new UtentiManager();
 		
 		if( dato != null && action != null && username != null) {

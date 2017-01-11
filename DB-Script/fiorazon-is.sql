@@ -131,10 +131,10 @@ values
 (6,7,18,5);
 
 
-insert into carrello(numeroCarrello, usernameCarrello)
+insert into carrello(usernameCarrello)
 values
-(1, 'carmelosottile'),
-(2, 'roccomiele1');
+('carmelosottile'),
+('roccomiele1');
 
 insert into prodottiCarrello(numeroCarrello,idProdottoCarrello,quantitàCarrello)
 values

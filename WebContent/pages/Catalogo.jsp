@@ -120,9 +120,14 @@
 						</form>		
 					
 					<% } else if(user != null){%>
- 					<!-- Per aggiungere il prodotto al carrello --> <a
-					href="product?action=addC&id=<%=p.getIdProdotto()%>">Aggiungi
-						al carrello</a>
+ 					<!-- Per aggiungere il prodotto al carrello --> 
+ 					<form action="ControlloAggiuntaProdottoServlet" method="post">
+ 					<input type="number" name="quantità" min="1" max="<%=p.getQuantita()%>">
+ 					<input type ="submit" value="Aggiungi al carrello">
+ 					<input type="hidden" name="id" value="<%=p.getIdProdotto()%>">
+ 					<input type="hidden" name="username" value="<%=user.getUsername()%>">
+ 					</form>
+ 					
 						<%} else {%>
 							<a href="index.jsp?IdPage=1">Effettua il login 
 							per aggiungere al carrello</a>
@@ -216,9 +221,16 @@
 	<script>
 		alert("Operazione non possibile");
 	</script>
+	
+	<%
+		} else if (response.getStatus() == HttpServletResponse.SC_NOT_MODIFIED) {
+	%>
+	<script>
+		alert("Quantità insufficiente nel negozio!");
+	</script>
 	<%
 		}
 	%>
-	
+	<%System.out.println(response.getStatus()); %>
 </body>
 </html>

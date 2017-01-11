@@ -58,18 +58,19 @@
 			</tr>
 			<tr>
 				<td>Username</td>
-				<td><input type="text" name="username" value="Mario12" required></td>
+				<td><input type="text" name="username" placeholder="Mario12" required></td>
 			</tr>
 			<tr>
 				<td>CAP</td>
-				<td><input type="text" name="cap" value="84013" required></td>
+				<td><input type="text" name="cap" placeholder="84013" required></td>
 			</tr>
 			<tr>
 				<td>Password</td>
-				<td><input type="password" name="password" value="carminoso" required></td>
+				<td><input type="password" name="password"  required></td>
 			</tr>
 			<tr>
-				<td></td>
+				<td><input type="reset"></td>
+				
 				<td><input type="submit" value="Registrati!"></td>
 			</tr>
 		</table>

@@ -34,7 +34,7 @@ div#content-avvenuta {
  	} else {
  %> Utente <%
  	} %></a></li>
-				<li><a href="index.jsp?IdPage=8">Negozio</a></li>
+				<li><a href="index.jsp?IdPage=8">Catalogo</a></li>
 				<li><a href="index.jsp?IdPage=3">Descrizione</a></li>
 			</ul>
 		</nav>

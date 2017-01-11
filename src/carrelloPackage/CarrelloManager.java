@@ -120,48 +120,78 @@ public class CarrelloManager {
 	/**Questo metodo aggiunge un prodotto al carrello.
 	 * Vuole come parametri l'id del prodotto da aggiungere e l'username
 	 * dell'utente relativo al carrello*/
-	public void aggiungiProdottoCarrello (String username, int idProdotto) throws SQLException {
+	public boolean aggiungiProdottoCarrello (String username, int idProdotto, int quantit‡) throws SQLException {
+		int numeroCarrello = 0;
+		boolean flag = true;
 		Connection conn = null;
-		PreparedStatement preparedStatement1 = null,preparedStatement2 = null,preparedStatement3 = null;
-		
-		String SQL1 ="select * from prodottiCarrello where username = ? and idProdotto = ? ";
-		String SQL2 = "update into prodottiCarrello  set quantitaCarrello = ? where username = ? and idProdotto = ?";
-		String SQL3 = " insert into prodottiCarrello  (utenteCarrello,numeroProdotto,quantitaCarrello)values(?,?,1)";
+		PreparedStatement preparedStatement1 = null,preparedStatement2 = null,
+				preparedStatement3 = null, preparedStatement4 = null, ps5=null ;
+		String SQL1 = "select * from carrello where usernameCarrello = ?";
+		String SQL2 = "insert into carrello(usernameCarrello) values(?)";
+		String SQL3 = "select * from prodotticarrello where numeroCarrello = ? "
+				+ "and idProdottoCarrello = ?";
+		String SQL4 = "insert into prodotticarrello(numeroCarrello,idProdottoCarrello,"
+				+ "quantit‡Carrello) values(?,?,?)";
 		try { 
 			conn = ds.getConnection();
 			preparedStatement1 = conn.prepareStatement(SQL1);
 			preparedStatement1.setString(1, username);
-			preparedStatement1.setInt(2, idProdotto);
-			ResultSet rs =preparedStatement1.executeQuery();
-			
-			if(rs.next() ){
-//	esegui l'update
+			ResultSet rs1 =preparedStatement1.executeQuery();
+			if(rs1.next()) {
+				numeroCarrello = rs1.getInt("numeroCarrello");
+			}
+			else {
 				preparedStatement2 = conn.prepareStatement(SQL2);
-				preparedStatement2.setInt(1, (rs.getInt("quantitaCarrello")+1));
-				preparedStatement2.setString(2, username);
-				preparedStatement2.setInt(3, idProdotto);
+				preparedStatement2.setString(1, username);
 				preparedStatement2.executeUpdate();
-				} else {
-				//esegui l'inserimento 	
-					preparedStatement3 = conn.prepareStatement(SQL3);
-					preparedStatement3.setString(1, username);
-					preparedStatement3.setInt(2, idProdotto);
-					preparedStatement3.executeUpdate();
-				}
+				preparedStatement3 = conn.prepareStatement(SQL1);
+				preparedStatement3.setString(1, username);
+				ResultSet rs2 = preparedStatement3.executeQuery();
+				if(rs2.next()) {
+					numeroCarrello = rs2.getInt("numeroCarrello");
+					}
+			
+			}
+			preparedStatement4 = conn.prepareStatement(SQL3);
+			preparedStatement4.setInt(1, numeroCarrello);
+			preparedStatement4.setInt(2, idProdotto);
+			ResultSet rs3 = preparedStatement4.executeQuery();
+			if(rs3.next()) { 
+				
+				String idProdottoS = ""+idProdotto;
+				flag = cambiaQuantit‡Carrello(numeroCarrello, quantit‡, idProdottoS);
+				
+			}
+			else {
+				ps5 = conn.prepareStatement(SQL4);
+				ps5.setInt(1, numeroCarrello);
+				ps5.setInt(2, idProdotto);
+				ps5.setInt(3, quantit‡);
+				ps5.executeUpdate();
+			}
 			
 			
 		}finally {
 			try {
-				if (preparedStatement1 != null && preparedStatement2 != null && preparedStatement3 != null) {
+				if (preparedStatement1 != null  && preparedStatement4 != null) {
+					preparedStatement4.close();
+					
+					preparedStatement1.close();
+				}
+				if (preparedStatement2 != null && preparedStatement3 != null) {
 					preparedStatement3.close();
 					preparedStatement2.close();
-					preparedStatement1.close();
+				}
+				if(ps5 != null) {
+					ps5.close();
 				}
 			} finally {
 				if (conn != null)
 					conn.close();
 			}
 		}
+		
+		return flag;
 	}
 	
 	/**Questo metodi elimina un prodotto dal carrello.
@@ -179,7 +209,6 @@ public class CarrelloManager {
 			preparedStatement1 = conn.prepareStatement(SQL);
 			preparedStatement1.setInt(1, idCarrello);
 			preparedStatement1.setInt(2, idProdottoInt);
-			System.out.println(idCarrello+" "+idProdottoInt);
 			preparedStatement1.executeUpdate();
 		
 		} finally {
@@ -193,5 +222,72 @@ public class CarrelloManager {
 					conn.close();
 			}
 		}
+	}
+	
+	public boolean cambiaQuantit‡Carrello(int idCarrello, int quantit‡Change, String idProdotto) throws SQLException {
+		boolean flag;
+		Connection conn = null;
+		PreparedStatement ps1 = null,ps2 = null;
+		PreparedStatement ps3 = null;
+		int idProdottoInt = Integer.parseInt(idProdotto);
+		
+		String SQL1=("select quantita from prodotto where idProdotto = ?");
+		String SQL2=("select quantit‡Carrello from prodottiCarrello "
+				+ "where idProdottoCarrello = ? and numeroCarrello = ?");
+		String SQL3=("update prodottiCarrello  set quantit‡Carrello = ? "
+				+ "where numeroCarrello = ? and idProdottoCarrello = ?");
+		try {
+			conn = ds.getConnection();
+			ps1 = conn.prepareStatement(SQL1);
+			ps1.setInt(1, idProdottoInt);
+			int quantit‡Disponibile=0;
+			ResultSet rs1 = ps1.executeQuery();
+			if(rs1.next()) {
+			
+			quantit‡Disponibile = rs1.getInt("quantita");
+			}
+			ps2 = conn.prepareStatement(SQL2);
+			ps2.setInt(1, idProdottoInt);
+			ps2.setInt(2, idCarrello);
+			ResultSet rs2 = ps2.executeQuery();
+			int quantit‡NelCarrello = 0;
+			if(rs2.next()) {
+			quantit‡NelCarrello = rs2.getInt("quantit‡Carrello");
+			}
+			if(quantit‡Disponibile <= (quantit‡NelCarrello + quantit‡Change)) {
+				
+				flag = false;
+			}
+			else if((quantit‡NelCarrello + quantit‡Change) <= 0) {
+				String SQL4 = "delete from prodotticarrello "
+						+ "where numeroCarrello = ? and idProdottoCarrello = ?";
+				ps3 = conn.prepareStatement(SQL4);
+				ps3.setInt(1, idCarrello);
+				ps3.setInt(2, idProdottoInt);
+				ps3.executeUpdate();
+				flag = true;
+			}
+			else {
+				ps3 = conn.prepareStatement(SQL3);
+				ps3.setInt(1, (quantit‡NelCarrello + quantit‡Change));
+				ps3.setInt(2, idCarrello);
+				ps3.setInt(3, idProdottoInt);
+				ps3.executeUpdate();
+				flag = true;
+			}
+		
+		} finally {
+			try {
+				if (ps1 != null && ps2 != null && ps3 != null) {
+					ps3.close();
+					ps2.close();
+					ps1.close();
+				}
+			} finally {
+				if (conn != null)
+					conn.close();
+			}
+		}
+		return flag;
 	}
 }

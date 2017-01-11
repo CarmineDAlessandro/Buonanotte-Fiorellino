@@ -24,7 +24,7 @@
  	}
  %>
 				</a></li>
-				<li><a href="index.jsp?IdPage=8">Negozio</a></li>
+				<li><a href="index.jsp?IdPage=8">Catalogo</a></li>
 				<li><a href="index.jsp?IdPage=3">Fiorazon</a></li>
 			</ul>
 		</nav>
@@ -58,7 +58,7 @@
 			;
 				break;
 				case 8:
-		%><%@include file="pages/Negozio.jsp"%>
+		%><%@include file="pages/Catalogo.jsp"%>
 		<% 
 			;
 				break;
