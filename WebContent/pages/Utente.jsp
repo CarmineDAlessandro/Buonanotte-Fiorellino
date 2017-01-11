@@ -164,6 +164,12 @@
 			</tr>
 			<tr>
 				<td>
+					<form action="ControlloVisualizzaCarrelloServlet" method ="post">
+					<input type="hidden" name="username" value="<%=bean.getUsername() %>">
+					<input type="submit" value="Visualizza il tuo carrello">
+					</form>
+				</td>
+				<td>
 					<form action="ControlloVisualizzaOrdiniUtente" method = "post">
 					<input type="hidden" name="username" value="<%=bean.getUsername() %>">
 					<input type="submit" value="Visualizza i tuoi ordini">

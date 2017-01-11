@@ -13,6 +13,8 @@ public class Carrello {
 	private ArrayList <Prodotto> lista;
 	/**Questo attributo è il prezzo totale del carrello*/
 	private double prezzo;
+	/**Questo attributo è l'id numerico del carrello*/
+	private int id;
 	
 	/**Questo costruttore crea un carrello senza prodotti e setta il prezzo
 	 * del carrello a 0*/
@@ -29,7 +31,7 @@ public class Carrello {
 	 * un'istanza. Se il prodotto esiste, allora ne aumenta la quantità
 	 * di 1*/
 	public void aggiungiProdotto (Prodotto prodotto) {
-		int i=0;
+		int i=0; //lista.get(i) lancia nullpointerexception! 
 		while (i<lista.size() && prodotto.getIdProdotto() != lista.get(i).getIdProdotto()) {
 			i++;
 		}
@@ -79,5 +81,22 @@ public class Carrello {
 	/**Questo metodo ritorna il prezzo*/
 	public double getPrezzo() {
 		return prezzo;
+	}
+	
+	/**Metodo che restituisce la lista di prodotti contenuti nel carrello.*/
+	public ArrayList<Prodotto> getLista() {
+		return lista;
+	}
+	/**Metodo che imposta la lista di prodotti contenuti nel carrello.*/
+	public void setLista(ArrayList <Prodotto> prodotti) {
+		lista=prodotti;
+	}
+	/**Metodo che restituisce l'id del carrello*/
+	public int getId() {
+		return id;
+	}
+	/**Metodo che imposta l'ide del carrello*/
+	public void setId(int id) {
+		this.id = id;
 	}
 }

@@ -93,6 +93,7 @@
 				<th>Immagine</th>
 				<th>Nome</th>
 				<th>Descrizione</th>
+				<th>Quantità</th>
 				<th>Prezzo</th>
 				<th></th>
 			</tr>
@@ -104,6 +105,7 @@
 				<td><img src="<%=p.getUrlImmagine()%>" alt="Immagine non disponibile" height="82" width="82"></td>
 				<td><%=p.getNome()%></td>
 				<td><%=p.getDescrizione()%></td>
+				<td><%=p.getQuantita()%>
 				<td><%=p.getPrezzo()%></td>
 				<td>
 					<%

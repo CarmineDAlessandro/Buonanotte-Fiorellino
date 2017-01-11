@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -46,10 +47,12 @@ public class CarrelloManager {
 	public Carrello getCarrello(String username) throws SQLException {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null;
-		String selectSQL = "select * from prodotticarrello, prodotto where utenteCarrello = ? "
-				+ "prodotticarrello.numeroProdotto = prodotto.idProdotto";
-		Carrello car = new Carrello();
-
+		String selectSQL = "select * from prodotto, carrello, prodotticarrello "
+				+ "where usernameCarrello = ? "
+				+ "&& carrello.numeroCarrello=prodotticarrello.numeroCarrello "
+				+ "&& idProdottoCarrello=idProdotto";
+		ArrayList<Prodotto> car = new ArrayList<Prodotto>();
+		Carrello carrello = new Carrello();
 		try {
 			conn = ds.getConnection();
 			preparedStatement1 = conn.prepareStatement(selectSQL);
@@ -58,9 +61,11 @@ public class CarrelloManager {
 			ResultSet rs = preparedStatement1.executeQuery();
 			int i = 0;
 			while (rs.next()) {
-				car.aggiungiProdotto(
+				carrello.setId(rs.getInt("numeroCarrello"));
+				
+				car.add(
 						new Prodotto(rs.getInt("idProdotto"), rs.getString("nome"), rs.getString("urlImmagine"),
-								rs.getString("descrizione "), rs.getInt("quantitaCarrello"), rs.getDouble("prezzo")));
+								rs.getString("descrizione"), rs.getInt("quantit‡Carrello"), rs.getDouble("prezzo")));
 
 				i++;
 			}
@@ -77,7 +82,9 @@ public class CarrelloManager {
 					conn.close();
 			}
 		}
-		return car;
+		
+		carrello.setLista(car);
+		return carrello;
 	}
 
 	/**
@@ -160,38 +167,25 @@ public class CarrelloManager {
 	/**Questo metodi elimina un prodotto dal carrello.
 	 * Ha come parametri l'username dell'utente a cui si riferisce il carrello
 	 * e l'id del prodotto da rimuovere*/
-	public void eliminaProdottoCarrello (String username, int idProdotto) throws SQLException  {
+	public void eliminaProdottoCarrello (int idCarrello, String idProdotto) throws SQLException  {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null,preparedStatement2 = null;
+		int idProdottoInt = Integer.parseInt(idProdotto);
 		
-		String SQL1 ="select * from prodottiCarrello where username = ? and idProdotto = ? ";
-		String SQL2 = "update into prodottiCarrello  set quantitaCarrello = ? where username = ? and idProdotto = ?";
-		String SQL3 = "delete from prodotticarrello where utenteCarrello = ? and idProdotto = ?";
+		String SQL = "delete from prodotticarrello where numeroCarrello = ? and idProdottoCarrello = ?";
 		
 		try {
 			conn = ds.getConnection();
-			preparedStatement1 = conn.prepareStatement(SQL1);
-			preparedStatement1.setString(1, username);
-			preparedStatement1.setInt(2, idProdotto);
-			ResultSet rs = preparedStatement1.executeQuery();
-			while(rs.next()) {
-				if(1 == (rs.getInt("quantitaCarrello"))){
-					preparedStatement2 = conn.prepareStatement(SQL3);
-					preparedStatement2.setString(1, username);
-					preparedStatement2.setInt(2, idProdotto);
-					preparedStatement2.executeUpdate();
-				}else{
-					preparedStatement2 = conn.prepareStatement(SQL2);
-					preparedStatement2.setInt(1,(rs.getInt("quantitaCarrello")-1) );
-					preparedStatement2.setString(2, username);
-					preparedStatement2.setInt(3, idProdotto);
-					preparedStatement2.executeUpdate();
-				}
-			}
+			preparedStatement1 = conn.prepareStatement(SQL);
+			preparedStatement1.setInt(1, idCarrello);
+			preparedStatement1.setInt(2, idProdottoInt);
+			System.out.println(idCarrello+" "+idProdottoInt);
+			preparedStatement1.executeUpdate();
+		
 		} finally {
 			try {
-				if (preparedStatement1 != null &&preparedStatement2 != null) {
-					preparedStatement2.close();
+				if (preparedStatement1 != null ) {
+				
 					preparedStatement1.close();
 				}
 			} finally {

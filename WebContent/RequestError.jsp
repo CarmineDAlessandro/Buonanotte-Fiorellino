@@ -14,10 +14,10 @@
 		<nav>
 			<ul>
 				<li><a href="index.jsp?IdPage=0">Home</a></li>
-				<li><a href="index.jsp?IdPage=1">Cerca</a></li>
-				<li><a href="index.jsp?IdPage=2">Login</a></li>
-				<li><a href="index.jsp?IdPage=3">Negozio</a></li>
-				<li><a href="index.jsp?IdPage=4">Conservatorio</a></li>
+				
+				<li><a href="index.jsp?IdPage=1">Login</a></li>
+				<li><a href="index.jsp?IdPage=8">Negozio</a></li>
+				<li><a href="index.jsp?IdPage=3">Fiorazon</a></li>
 			</ul>
 		</nav>
 

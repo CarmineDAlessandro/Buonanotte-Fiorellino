@@ -67,6 +67,10 @@
 		<% 
 			;
 				break;
+				case 10:
+		%><%@include file="pages/Carrello.jsp"%>
+		<%
+		 	;
 				}
 				
 			}

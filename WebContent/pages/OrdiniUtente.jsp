@@ -55,8 +55,7 @@ div#content-avvenuta {
 					<% for(Ordine o:ordini) {%>
 					<tr bgcolor="FFFFFF">
 						<td valign="baseline" align="right" id="id_ord"> <%= o.getId() %> </td>
-						<%System.out.println(o.getId()); %>
-					
+						
 					
 						 <% ArrayList<Prodotto> prodotti = o.getProdotto(); %>
 						 <td>
