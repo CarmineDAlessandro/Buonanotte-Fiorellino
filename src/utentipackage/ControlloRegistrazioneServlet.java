@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -62,7 +62,8 @@ public class ControlloRegistrazioneServlet extends HttpServlet {
 				
 			}
 		}
-		String data = request.getParameter("data");
+		
+		Date data_nascita = Date.valueOf(request.getParameter("data"));
 		String città_nascita = request.getParameter("cittàN");
 		if(città_nascita.length() > 40) flag = false;
 		for (int i=0; i < città_nascita.length(); i ++) {
@@ -116,14 +117,7 @@ public class ControlloRegistrazioneServlet extends HttpServlet {
 		if(username.length() > 30) flag = false;
 		if(flag) nc = Integer.parseInt(numeroCivico);
 	
-		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		Date data_nascita = null;
-		try {
-			data_nascita = df.parse(data);
-		} catch (ParseException e) {
-		// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	
 	
 		Utente bean = new Utente();

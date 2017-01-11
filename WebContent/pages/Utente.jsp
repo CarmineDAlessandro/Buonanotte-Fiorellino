@@ -59,7 +59,7 @@
 				<td>
 					<form action="ControlloModificaDatiUtentiServlet" method="post">
 						<input type="hidden" name = "action" value = "data">
-						<input type="date" placeholder="gg/mm/aaaa" name="dato" required>
+						<input type="date" max="<%=new java.sql.Date(System.currentTimeMillis()) %>" placeholder="gg/mm/aaaa" name="dato" required>
 						<input type="submit" value="Modifica">
 					</form>
 				</td>

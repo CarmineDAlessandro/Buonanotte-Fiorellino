@@ -31,7 +31,8 @@
 			</tr>
 			<tr>
 				<td>Data di nascita</td>
-				<td><input type="date" name="data" required placeholder="gg/mm/aaaa" required></td>
+				<td><input type="date" name="data" max="<%=new java.sql.Date(System.currentTimeMillis()) %>" 
+				required placeholder="gg/mm/aaaa" required></td>
 			</tr>
 			<tr>
 				<td>Città di nascita</td>

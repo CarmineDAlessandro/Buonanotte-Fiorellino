@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -477,21 +477,15 @@ public class UtentiManager {
 
 		}
 		if (action.equals("data")) {
-
-			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-			Date data_nascita = null;
-			try {
-				data_nascita = df.parse(dato);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Date data_nascita = Date.valueOf(dato);;
+			
+			
 			String SQL = " UPDATE utente SET dataNascita = ? WHERE username = ?";
 			try {
 				conn = ds.getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
-				java.sql.Date sqlDate = new java.sql.Date(data_nascita.getTime());
-				preparedStatement5.setDate(1, sqlDate);
+				
+				preparedStatement5.setDate(1, data_nascita);
 				preparedStatement5.setString(2, username);
 				preparedStatement5.execute();
 				return true;
@@ -539,8 +533,8 @@ public class UtentiManager {
 				preparedStatement2.setString(2, usr.getCognome());
 				preparedStatement2.setString(3, usr.geteMail());
 				preparedStatement2.setString(4, usr.getCodiceFiscale());
-				java.sql.Date sqlDate = new java.sql.Date(usr.getDataDiNascita().getTime());
-				preparedStatement2.setDate(5, sqlDate);
+				
+				preparedStatement2.setDate(5, usr.getDataDiNascita());
 				preparedStatement2.setString(6, usr.getCittaDiNascita());
 				preparedStatement2.setString(7, usr.getCittaResidenza());
 				preparedStatement2.setString(8, usr.getProvincia());
