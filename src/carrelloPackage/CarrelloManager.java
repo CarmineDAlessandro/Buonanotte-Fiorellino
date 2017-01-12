@@ -194,7 +194,7 @@ public class CarrelloManager {
 		return flag;
 	}
 	
-	/**Questo metodi elimina un prodotto dal carrello.
+	/**Questo metodo elimina un prodotto dal carrello.
 	 * Ha come parametri l'username dell'utente a cui si riferisce il carrello
 	 * e l'id del prodotto da rimuovere*/
 	public void eliminaProdottoCarrello (int idCarrello, String idProdotto) throws SQLException  {
@@ -223,7 +223,14 @@ public class CarrelloManager {
 			}
 		}
 	}
-	
+	/**
+	 * Questo metodo cambia la quantit‡ di un prodotto dal carrello.
+	 * @param idCarrello Ë l'id del carrello
+	 * @param quantit‡Change Ë la variazione di quantit‡ del prodotto
+	 * @param idProdotto l'id del prodotto
+	 * @return restituisce l'esito dell'operazione
+	 * @throws SQLException
+	 */
 	public boolean cambiaQuantit‡Carrello(int idCarrello, int quantit‡Change, String idProdotto) throws SQLException {
 		boolean flag;
 		Connection conn = null;
