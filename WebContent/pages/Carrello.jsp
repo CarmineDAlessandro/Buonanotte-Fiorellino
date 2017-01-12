@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" errorPage="RequestError.jsp"%>
-<%if(request.getSession().getAttribute("utente") != null) {%>
+<%if(request.getSession().getAttribute("utente") != null && request.getSession().getAttribute("carrello") != null) {%>
 <%
 	
-	Carrello carrello = (Carrello) request.getAttribute("carrello");
+	Carrello carrello = (Carrello) request.getSession().getAttribute("carrello");
 %>
 
 <head>
@@ -36,13 +36,13 @@
 						<td><%=p.getNome()%></td>
 						<td><%=p.getDescrizione()%></td>
 						<td><%=p.getQuantita()%>
-						<td><%=p.getPrezzo()%> <%prezzoTot = prezzoTot + (p.getPrezzo() * p.getQuantita()); %></td>
+						<td>&euro;<%=p.getPrezzo()%> <%prezzoTot = prezzoTot + (p.getPrezzo() * p.getQuantita()); %></td>
 						
 						<td>
 							<form action="CambiaQuantitàCarrelloServlet" method="post">
 							<input type="hidden" name="idProdotto" value="<%=p.getIdProdotto()%>">
 							<input type="hidden" name="idCarrello" value="<%=carrello.getId()%>">
-							<input type="number" name="quantità"> 
+							<input type="number" name="quantità" required> 
 							<input type="submit" value="Cambia la quantità del prodotto">
 							
 							</form>
@@ -66,9 +66,14 @@
 						</td>
 					</tr>
 					
-			<%}%><tr bgcolor="FFFFFF"> <%String prezzoTotS = ""+prezzoTot; %>
-						<td>Prezzo totale: <%=Float.valueOf(prezzoTotS) %></td>
+			<%}%>	<tr bgcolor="FFFFFF"> <%String prezzoTotS = ""+prezzoTot; %>
+						<td>Prezzo totale: &euro;<%=Float.valueOf(prezzoTotS) %></td>
 						
+					</tr>
+					<tr bgcolor="FFFFFF">
+						<form action ="ControlloAcquistoCarrelloServlet" method="post">
+						<input type="submit" value="Acquista il carrello">
+						</form>
 					</tr>
 			 </table>
 			 <%}else {
@@ -76,7 +81,18 @@
 		<div id="nessuno">
 		Non hai nessun prodotto nel tuo carrello!
 		</div>
-		<%}}	%>
+</body>		
+		<%}	%>
+		<%} else {%>
+		<body>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<style type="text/css">
+			.giallo {background-color: #FFFF00;}
+		</style>
+		<div class="giallo">
+		Non hai nessun prodotto nel tuo carrello!
+		</div>
 		
+		</body>
+		<%} %>
 
-</body>

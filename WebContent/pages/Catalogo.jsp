@@ -106,7 +106,7 @@
 				<td><%=p.getNome()%></td>
 				<td><%=p.getDescrizione()%></td>
 				<td><%=p.getQuantita()%>
-				<td><%=p.getPrezzo()%></td>
+				<td>&euro;<%=p.getPrezzo()%></td>
 				<td>
 					<%
 						if (admin != null) {
@@ -122,7 +122,7 @@
 					<% } else if(user != null){%>
  					<!-- Per aggiungere il prodotto al carrello --> 
  					<form action="ControlloAggiuntaProdottoServlet" method="post">
- 					<input type="number" name="quantità" min="1" max="<%=p.getQuantita()%>">
+ 					<input type="number" name="quantità" min="1" max="<%=p.getQuantita()%>" required>
  					<input type ="submit" value="Aggiungi al carrello">
  					<input type="hidden" name="id" value="<%=p.getIdProdotto()%>">
  					<input type="hidden" name="username" value="<%=user.getUsername()%>">

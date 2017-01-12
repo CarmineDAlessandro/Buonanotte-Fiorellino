@@ -190,4 +190,15 @@ response.sendRedirect("http://localhost:8080/Fiorazon/index.jsp?IdPage=1");
 
 %>
 <%} %>
+<% if(response.getStatus() == HttpServletResponse.SC_CONFLICT) { %>
+			<script>
+				alert("Impossibile effettuare l'ordine. Ti preghiamo di ricontrollare"
+						+" il numero della carta di credito e le quantità dei prodotti"
+						+" inserire nel carrello.");
+			</script>
+			<% } else if(response.getStatus() == HttpServletResponse.SC_CREATED) { %>
+			<script>
+				alert("Congratulazioni! Ordine effettuato.");
+			</script>
+<% } %>
 </body>

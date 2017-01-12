@@ -261,7 +261,7 @@ public class CarrelloManager {
 			if(rs2.next()) {
 			quantit‡NelCarrello = rs2.getInt("quantit‡Carrello");
 			}
-			if(quantit‡Disponibile <= (quantit‡NelCarrello + quantit‡Change)) {
+			if(quantit‡Disponibile < (quantit‡NelCarrello + quantit‡Change)) {
 				
 				flag = false;
 			}

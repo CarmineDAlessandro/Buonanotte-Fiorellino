@@ -48,7 +48,7 @@ public class RimuoviProdottoCarrelloServlet extends HttpServlet {
 			}
 	
 		RequestDispatcher dispatcher = null;
-		dispatcher = getServletContext().getRequestDispatcher("/index.jsp?IdPage=10");
+		dispatcher = getServletContext().getRequestDispatcher("/index.jsp?IdPage=1");
 		dispatcher.forward(request, response);
 	}
 

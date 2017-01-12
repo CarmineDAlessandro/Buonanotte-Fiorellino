@@ -71,6 +71,13 @@
 		%><%@include file="pages/Carrello.jsp"%>
 		<%
 		 	;
+				break;
+				case 11:
+		%><%@include file ="pages/Pagamento.jsp" %>
+		<%
+			;
+				break;
+		
 				}
 				
 			}

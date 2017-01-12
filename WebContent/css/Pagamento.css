@@ -1,0 +1,18 @@
+div#content-riepilogo {
+	background-color: white;
+	marging: 10px 10px 10px 10px;
+	padding: 10px 10px 10px 30px;
+}
+
+th, td {
+	text-align: left;
+}
+
+/*mobile*/
+@media screen and (max-width: 840px) {
+	div#content-riepilogo {
+		padding: 5px 5px 5px 5px;
+		background-color: white;
+		font-size:12px;
+		}
+}

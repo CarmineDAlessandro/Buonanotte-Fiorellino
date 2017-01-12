@@ -2,7 +2,6 @@ package carrelloPackage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,44 +11,43 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ordinepackage.Ordine;
-import prodottipackage.Prodotto;
+import ordinepackage.OrdineManager;
+import utentipackage.Utente;
 
 /**
- * Servlet implementation class ControlloVisualizzaCarrelloServlet
+ * Servlet implementation class ControlloAcquistoCarrelloServlet
  */
-@WebServlet("/ControlloVisualizzaCarrelloServlet")
-public class ControlloVisualizzaCarrelloServlet extends HttpServlet {
+@WebServlet("/ControlloAcquistoCarrelloServlet")
+public class ControlloAcquistoCarrelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControlloVisualizzaCarrelloServlet() {
+    public ControlloAcquistoCarrelloServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
+	/**Metodo che permette l'acquisto del carrello.
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = request.getParameter("username");
+		Carrello carrello = (Carrello) request.getSession().getAttribute("carrello");
+		Utente utente = (Utente) request.getSession().getAttribute("utente");
+		OrdineManager model = new OrdineManager();
 		
-		request.removeAttribute("username");
-		CarrelloManager model = new CarrelloManager();
 		try {
-			
-			Carrello carrello = model.getCarrello(username);
-			request.getSession().setAttribute("carrello", carrello);
-			
+			Ordine ordine = model.creaOrdine(carrello,utente);
+			request.getSession().setAttribute("ordine", ordine);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		RequestDispatcher dispatcher = null;
-		dispatcher = getServletContext().getRequestDispatcher("/index.jsp?IdPage=10");
+		dispatcher = getServletContext().getRequestDispatcher("/index.jsp?IdPage=11");
+		
 		dispatcher.forward(request, response);
 	}
 
