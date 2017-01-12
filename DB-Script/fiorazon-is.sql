@@ -57,9 +57,10 @@ CREATE TABLE prodottiOrdine (
 	idProdottoOrdine int not null,
 	quantitàProdottoOrdine int,
 	prezzo int,
+	nomeProdottiOrdine varchar(30),
     constraint chiavePrimaria5 primary key (idOrdine, idProdottoOrdine),
-	constraint chiaveEsterna3 foreign key (idOrdine) references ordine(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	constraint chiaveEsterna4 foreign key (idProdottoOrdine) references prodotto(idProdotto) ON DELETE CASCADE ON UPDATE CASCADE 
+	constraint chiaveEsterna3 foreign key (idOrdine) references ordine(id) ON DELETE CASCADE ON UPDATE CASCADE
+	
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE carrello (
@@ -92,7 +93,7 @@ values
 
 insert into prodotto (idProdotto,urlImmagine,nome,quantita,descrizione,prezzo)
 values
-(1,'./Immagini/margerita.jpg','margerita','140','la margerita  ......',2.3),
+(1,'./Immagini/margerita.jpg','margherita','140','la margerita  ......',2.3),
 (2,'./Immagini/geranio.jpg','geranio','140','la geranio  ......',4.1),
 (3,'./Immagini/viola.jpg','viola','140','la viola  ......',1.0),
 (4,'./Immagini/gelsomino.jpg','gelsomino','140','la gelsomino  ......',3.5),
@@ -115,20 +116,20 @@ values
 ('carmelosottile',26.7,'Spedito'),
 ('carmelosottile',77.7,'Da Spedire');
 
-insert into prodottiOrdine (idOrdine,idProdottoOrdine,quantitàProdottoOrdine,prezzo)
+insert into prodottiOrdine (idOrdine,idProdottoOrdine,quantitàProdottoOrdine,prezzo,nomeProdottiOrdine)
 values
-(1,10,4,10),
-(1,1,30,10),
-(2,13,51,10),
-(2,12,66,10),
-(3,9,24,10),
-(3,5,12,10),
-(4,8,8,10),
-(4,2,71,10),
-(5,4,20,5),
-(5,5,20,5),
-(6,8,18,5),
-(6,7,18,5);
+(1,10,4,10,'bocca di leone'),
+(1,1,30,10,'margherita'),
+(2,13,51,10,'rosa'),
+(2,12,66,10,'lilium'),
+(3,9,24,10,'tulipano'),
+(3,5,12,10,'gardenia'),
+(4,8,8,10,'melo'),
+(4,2,71,10,'geranio'),
+(5,4,20,5,'gelsomino'),
+(5,5,20,5,'gardenia'),
+(6,8,18,5,'melo'),
+(6,7,18,5,'ciclamino');
 
 
 insert into carrello(usernameCarrello)

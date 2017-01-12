@@ -17,7 +17,7 @@
 	<%@page import="prodottipackage.Prodotto" %>
 	<%@page import="java.util.ArrayList" %>
 	<%ArrayList<Prodotto> lista = carrello.getLista(); %>
-	
+	<%double prezzoTot = 0; %>
 	<div class="giallo">
 			<%if(lista != null && lista.size()>0) {%>	
 				<table width="" bgcolor="yellow" cellpadding="10" cellspacing="1">
@@ -36,7 +36,7 @@
 						<td><%=p.getNome()%></td>
 						<td><%=p.getDescrizione()%></td>
 						<td><%=p.getQuantita()%>
-						<td><%=p.getPrezzo()%></td>
+						<td><%=p.getPrezzo()%> <%prezzoTot = prezzoTot + (p.getPrezzo() * p.getQuantita()); %></td>
 						
 						<td>
 							<form action="CambiaQuantitàCarrelloServlet" method="post">
@@ -65,7 +65,12 @@
 							</form>
 						</td>
 					</tr>
-			<%}%> </table>
+					
+			<%}%><tr bgcolor="FFFFFF"> <%String prezzoTotS = ""+prezzoTot; %>
+						<td>Prezzo totale: <%=Float.valueOf(prezzoTotS) %></td>
+						
+					</tr>
+			 </table>
 			 <%}else {
 		%>
 		<div id="nessuno">

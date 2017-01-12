@@ -37,13 +37,13 @@ public class OrdineManager {
 	 * ogni ordine presente nel database*/
 	public ArrayList<Ordine> returnOrdiniAmministratore() throws SQLException {
 		Connection conn = null;
-		PreparedStatement preparedStatement1 = null, preparedStatement2 = null, preparedStatement3 = null;
+		PreparedStatement preparedStatement1 = null, preparedStatement2 = null;
 		ArrayList<Ordine> listaOrdine = new ArrayList<Ordine>();
 		ArrayList<Prodotto> listaProdotto = new ArrayList<Prodotto>();
 
 		String SQL1 = "select * from Ordine";
-		String SQL2 = "select idProdottoOrdine,quantit‡ProdottoOrdine,prezzo from prodottiordine where idOrdine = ?";
-		String SQL3 = "select * from prodotto where idProdotto = ?";
+		String SQL2 = "select idProdottoOrdine,quantit‡ProdottoOrdine,prezzo,nomeProdottiOrdine from prodottiordine where idOrdine = ?";
+		
 
 		try {
 			conn = ds.getConnection();
@@ -64,22 +64,15 @@ public class OrdineManager {
 					preparedStatement2 = conn.prepareStatement(SQL2);
 					preparedStatement2.setInt(1, or.getId());
 					ResultSet rst = preparedStatement2.executeQuery();
-
+					
 					while (rst.next()) {
 						Prodotto prd = new Prodotto();
 						prd.setIdProdotto(rst.getInt("idProdottoOrdine"));
 						prd.setQuantita(rst.getInt("quantit‡ProdottoOrdine"));
 						prd.setPrezzo(rst.getDouble("prezzo"));
-						// query per informazioni affine prodotto
-						preparedStatement3 = conn.prepareStatement(SQL3);
-						preparedStatement3.setInt(1, prd.getIdProdotto());
-						ResultSet rsx = preparedStatement3.executeQuery();
-						while (rsx.next()) {
-							prd.setUrlImmagine(rsx.getString("urlImmagine"));
-							prd.setNome(rsx.getString("nome"));
-							prd.setDescrizione(rsx.getString("descrizione"));
-					
-						}
+						prd.setNome(rst.getString("nomeProdottiOrdine"));
+						
+						
 
 						// aggiunge prodotto all' array
 						
@@ -87,12 +80,13 @@ public class OrdineManager {
 					}
 					// aggiunge prodotto all' ordine
 					or.setProdotto(listaProdotto);
+					listaProdotto = new ArrayList<Prodotto>();
 				}
 
 			} finally {
 				try {
-					if (preparedStatement1 != null && preparedStatement2 != null && preparedStatement3 != null) {
-						preparedStatement3.close();
+					if (preparedStatement1 != null && preparedStatement2 != null ) {
+						
 						preparedStatement2.close();
 						preparedStatement1.close();
 					}
@@ -110,13 +104,13 @@ public class OrdineManager {
 	 * passato come parametro*/
 	public ArrayList<Ordine> returnOrdiniUtente(String username) throws SQLException {
 		Connection conn = null;
-		PreparedStatement preparedStatement1 = null, preparedStatement2 = null, preparedStatement3 = null;
+		PreparedStatement preparedStatement1 = null, preparedStatement2 = null;
 		ArrayList<Ordine> listaOrdine = new ArrayList<Ordine>();
 		ArrayList<Prodotto> listaProdotto = new ArrayList<Prodotto>();
 	
 		String SQL1 = "select * from Ordine where utenteOrdine = ?";
-		String SQL2 = "select idProdottoOrdine,quantit‡ProdottoOrdine,prezzo from prodottiordine where idOrdine = ?";
-		String SQL3 = "select * from prodotto where idProdotto = ?";
+		String SQL2 = "select idProdottoOrdine,quantit‡ProdottoOrdine,prezzo,nomeProdottiOrdine from prodottiordine where idOrdine = ?";
+		
 
 		try {
 			conn = ds.getConnection();
@@ -145,16 +139,9 @@ public class OrdineManager {
 					prd.setIdProdotto(rst.getInt("idProdottoOrdine"));
 					prd.setQuantita(rst.getInt("quantit‡ProdottoOrdine"));
 					prd.setPrezzo(rst.getDouble("prezzo"));
-					// query per informazioni affine prodotto
-					preparedStatement3 = conn.prepareStatement(SQL3);
-					preparedStatement3.setInt(1, prd.getIdProdotto());
-					ResultSet rsx = preparedStatement3.executeQuery();
-					while (rsx.next()) {
-						prd.setUrlImmagine(rsx.getString("urlImmagine"));
-						prd.setNome(rsx.getString("nome"));
-						prd.setDescrizione(rsx.getString("descrizione"));
-				
-					}
+					prd.setNome(rst.getString("nomeProdottiOrdine"));
+					
+					
 
 					// aggiunge prodotto all' array
 					
@@ -162,12 +149,13 @@ public class OrdineManager {
 				}
 				// aggiunge prodotto all' ordine
 				or.setProdotto(listaProdotto);
+				listaProdotto = new ArrayList<Prodotto>();
 			}
 
 		} finally {
 			try {
-				if (preparedStatement1 != null && preparedStatement2 != null && preparedStatement3 != null) {
-					preparedStatement3.close();
+				if (preparedStatement1 != null && preparedStatement2 != null ) {
+				
 					preparedStatement2.close();
 					preparedStatement1.close();
 				}
