@@ -223,42 +223,45 @@ public class OrdineManager {
 	
 		try {
 			conn = ds.getConnection();
-			ps3 = conn.prepareStatement(SQL3);
-			ps3.setString(1, username);
-			ps3.executeUpdate();
-			ps4 = conn.prepareStatement(SQL4);
-			ps4.setString(1, username);
-			ResultSet rs4 = ps4.executeQuery();
 			
-			if(rs4.next()) {
-				idOrdine = rs4.getInt("id");
-			}
-			preparedStatement1 = conn.prepareStatement(SQL1);
-			preparedStatement1.setInt(1, carrello.getId());
-			ResultSet rs1 = preparedStatement1.executeQuery();
-			while(rs1.next()) {
-				ps2 = conn.prepareStatement(SQL2);
-				int idProdottoCarrello = rs1.getInt("idProdottoCarrello");
-				int quantit‡ = rs1.getInt("quantit‡Carrello");
-				ps2.setInt(1, idProdottoCarrello);
-				ResultSet rs2 = ps2.executeQuery();
-				if(rs2.next()) {
-					ps5 = conn.prepareStatement(SQL5);
-					ps5.setInt(1, idOrdine);
-					ps5.setInt(2, idProdottoCarrello);
-					ps5.setInt(3, quantit‡);
-					double prezzo = rs2.getDouble("prezzo");
-					prezzoTot += prezzo * quantit‡;
-					ps5.setDouble(4, prezzo);
-					String nome = rs2.getString("nome");
-					ps5.setString(5, nome);
-					ps5.executeUpdate();
+				ps3 = conn.prepareStatement(SQL3);
+				ps3.setString(1, username);
+				ps3.executeUpdate(); //inserisco l'ordine nel database
+				ps4 = conn.prepareStatement(SQL4);
+				ps4.setString(1, username);
+				ResultSet rs4 = ps4.executeQuery();
+				
+				if(rs4.next()) { //mi prendo l'id dell'ordine
+					idOrdine = rs4.getInt("id");
 				}
-			}
-			
+				preparedStatement1 = conn.prepareStatement(SQL1);
+				preparedStatement1.setInt(1, carrello.getId());
+				ResultSet rs1 = preparedStatement1.executeQuery();
+				while(rs1.next()) { //mi prendo i prodotti dal carrello
+					ps2 = conn.prepareStatement(SQL2);
+					int idProdottoCarrello = rs1.getInt("idProdottoCarrello");
+					int quantit‡ = rs1.getInt("quantit‡Carrello");
+					ps2.setInt(1, idProdottoCarrello);
+					ResultSet rs2 = ps2.executeQuery(); //mi prendo il nome del prodotto
+					if(rs2.next()) {
+						ps5 = conn.prepareStatement(SQL5);
+						ps5.setInt(1, idOrdine);
+						ps5.setInt(2, idProdottoCarrello);
+						ps5.setInt(3, quantit‡);
+						double prezzo = rs2.getDouble("prezzo");
+						prezzoTot += prezzo * quantit‡;
+						ps5.setDouble(4, prezzo);
+						String nome = rs2.getString("nome");
+						ps5.setString(5, nome);
+						ps5.executeUpdate();
+					}
+				}
+				
 		} finally {
 			try {
-				if (preparedStatement1 != null && ps2 != null && ps3 != null && ps4 != null && ps5 != null) {
+				if (preparedStatement1 != null && ps2 != null && ps3 != null && ps4 != null 
+						&& ps5 != null ) {
+					
 					ps5.close();
 					ps4.close();
 					ps3.close();
@@ -281,9 +284,14 @@ public class OrdineManager {
 	}
 	// __________________________________________________________________________________________________
 	// iserici iban
-	/**Questo metodo permette di associare un codice iban all'ordine.
-	 * Ha come parametri il nuovo codice iban da associare all'ordine
-	 * e l'id dell'oridne da modificare*/
+	/**
+	 * Questo metodo permette di completare il pagamento con l'inserimento dell'iban
+	 * @param ordine che deve essere completato
+	 * @param carrello che deve essere cancellato
+	 * @param iban da inserire nell'ordine
+	 * @return l'esito dell'operazione
+	 * @throws SQLException
+	 */
 	public boolean inserisciIban(Ordine ordine, Carrello carrello, String iban) throws SQLException {
 		boolean flag = true;
 		Connection conn = null;

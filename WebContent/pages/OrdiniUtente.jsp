@@ -3,7 +3,7 @@
 <%if(request.getSession().getAttribute("utente") != null) {%>
 <%
 	ArrayList<Ordine> ordini = (ArrayList<Ordine>) request.getAttribute("ordini");
-	
+	request.removeAttribute("ordini");
 %>
 <!DOCTYPE html>
 <html>
@@ -53,11 +53,15 @@ div#content-avvenuta {
 					</tr>
 					
 					<% for(Ordine o:ordini) {%>
+					 <% ArrayList<Prodotto> prodotti = o.getProdotto(); %>
+					 
+					 <% if(prodotti.size() != 0) {%>
+					  
 					<tr bgcolor="FFFFFF">
 						<td valign="baseline" align="right" id="id_ord"> <%= o.getId() %> </td>
 						
 					
-						 <% ArrayList<Prodotto> prodotti = o.getProdotto(); %>
+						
 						 <td>
 						 <table>
 						 <% for (Prodotto p:prodotti) {%>
@@ -65,7 +69,8 @@ div#content-avvenuta {
 						 	<tr bgcolor="FFFFFF">
 						 	<td><%=p.getNome() %></td>
 						 	<td>n&deg;<%=p.getQuantita() %></td>
-						 	<td>&euro;<%=p.getPrezzo() %></td>
+						 	<%String prezzoS = ""+p.getPrezzo(); %>
+						 	<td>&euro;<%=Float.valueOf(prezzoS) %></td>
 						 	</tr>
 						 
 						 <%} %>
@@ -87,6 +92,7 @@ div#content-avvenuta {
 						</td>
 						<%} %>
 					</tr>
+					<%} %>
 					<%} %>
 				</table>
 			<%

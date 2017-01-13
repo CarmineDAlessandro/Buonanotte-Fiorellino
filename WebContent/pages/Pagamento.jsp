@@ -68,6 +68,7 @@
 			</tr>
 			<tr>
 				<th>Importo da pagare:</th>
+				
 				<%String prezzoTotaleS = ""+ordine.getPrezzoTotale(); %>
 				<td>&euro;<%=Float.valueOf(prezzoTotaleS)%></td>
 				<td>

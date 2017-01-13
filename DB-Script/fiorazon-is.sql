@@ -32,7 +32,7 @@ CREATE TABLE amministratore (
 
 CREATE TABLE prodotto (
 	idProdotto int not null AUTO_INCREMENT,
-	urlImmagine varchar(50) ,
+	urlImmagine varchar(100) ,
 	nome varchar(30) not null,
 	quantita int(15),
 	descrizione varchar(300),
@@ -56,7 +56,7 @@ CREATE TABLE prodottiOrdine (
 	idOrdine int not null,
 	idProdottoOrdine int not null,
 	quantitàProdottoOrdine int,
-	prezzo int,
+	prezzo double(15,2),
 	nomeProdottiOrdine varchar(30),
     constraint chiavePrimaria5 primary key (idOrdine, idProdottoOrdine),
 	constraint chiaveEsterna3 foreign key (idOrdine) references ordine(id) ON DELETE CASCADE ON UPDATE CASCADE

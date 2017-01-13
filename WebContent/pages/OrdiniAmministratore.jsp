@@ -3,7 +3,7 @@
 <%if(request.getSession().getAttribute("amministratore") != null) {%>
 <%
 	ArrayList<Ordine> ordini = (ArrayList<Ordine>) request.getAttribute("ordini");
-	
+	request.removeAttribute("ordini");
 %>
 <!DOCTYPE html>
 <html>
@@ -54,12 +54,14 @@ aaa
 					</tr>
 					
 					<% for(Ordine o:ordini) {%>
+					<% ArrayList<Prodotto> prodotti = o.getProdotto(); %>
+					<% if(prodotti.size() != 0) {%>
 					<tr bgcolor="FFFFFF">
 						<td valign="baseline" align="right" id="id_ord"> <%= o.getId() %> </td>
-						<%System.out.println(o.getId()); %>
+						
 					
 					
-						 <% ArrayList<Prodotto> prodotti = o.getProdotto(); %>
+						
 						 <td>
 						 <table >
 						 <% for (Prodotto p:prodotti) {%>
@@ -67,7 +69,9 @@ aaa
 						 	<tr bgcolor="FFFFFF">
 						 	<td><%=p.getNome() %></td>
 						 	<td>n&deg;<%=p.getQuantita() %></td>
-						 	<td>&euro;<%=p.getPrezzo() %></td>
+						 	<%String prezzoS = ""+p.getPrezzo(); %>
+						 	
+						 	<td>&euro;<%=Float.valueOf(prezzoS) %></td>
 						 	</tr>
 						 
 						 <%} %>
@@ -89,6 +93,7 @@ aaa
 						</td>
 						<%} %>
 					</tr>
+					<%} %>
 					<%} %>
 				</table>
 			<%

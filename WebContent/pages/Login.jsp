@@ -29,7 +29,7 @@
 				
 					<tr>
 					
-						<td><input type="submit"></td>
+						<td><input type="submit" value="Effettua il login"></td>
 					</tr>
 				</table>
 			</form>
@@ -58,7 +58,7 @@
 
 					</tr>
 					<tr>
-						<td><input type="submit"></td>
+						<td><input type="submit" value="Effettua il login"></td>
 					</tr>
 				</table>
 			</form>

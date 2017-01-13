@@ -47,6 +47,7 @@ public class UtentiManager {
 		Utente usr = new Utente();
 		try {
 			conn = ds.getConnection();
+			System.out.println("lo fa");
 			preparedStatement1 = conn.prepareStatement(selectSQL);
 			preparedStatement1.setString(1, username);
 			preparedStatement1.setString(2, password);
@@ -79,6 +80,7 @@ public class UtentiManager {
 					conn.close();
 			}
 		}
+		System.out.println(usr.getUsername());
 		return usr;
 	}
 
