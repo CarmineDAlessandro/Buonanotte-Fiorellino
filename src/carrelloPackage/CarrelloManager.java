@@ -87,36 +87,8 @@ public class CarrelloManager {
 		return carrello;
 	}
 
-	/**
-	 * Ripulisce prodotticarrello di tutte le coppie che si riferiscono
-	 * all'utente.
-	 * 
-	 * @throws SQLException
-	 * 
-	 */
-	public void eliminaCarrello(String username) throws SQLException {
-		Connection conn = null;
-		PreparedStatement preparedStatement = null;
 
-		String query = "delete from prodotticarrello where utenteCarrello = ?";
-		try {
-			conn = ds.getConnection();
-			preparedStatement = conn.prepareStatement(query);
-			preparedStatement.setString(1, username);
-
-			preparedStatement.executeQuery();
-		} finally {
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-			} finally {
-				if (conn != null)
-					conn.close();
-			}
-		}
-	}
-
+	
 	/**Questo metodo aggiunge un prodotto al carrello.
 	 * Vuole come parametri l'id del prodotto da aggiungere e l'username
 	 * dell'utente relativo al carrello*/
