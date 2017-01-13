@@ -29,13 +29,13 @@ public class Ordine {
 	public Ordine() {
 	}
 	
-	public Ordine(String utenteOrdine,String iban,String stato , double prezzoTotale , int id ,ArrayList<Prodotto> prodotto) {
+	public Ordine(String utenteOrdine,String iban,String stato , double prezzoTotale , int id ) {
 		this.utenteOrdine = utenteOrdine;
 		this.iban= iban;
 		this.stato = stato;
 		this.prezzoTotale = prezzoTotale;
 		this.id = id;
-		this.prodotto = prodotto;
+		
 	}
 	
 	//metodi get
