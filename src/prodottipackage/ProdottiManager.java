@@ -207,7 +207,7 @@ public class ProdottiManager {
 			
 			if (flag == true) {
 				try {
-					conn = ds.getConnection();
+					conn = getConnection();
 					String SQL2 = "SELECT * FROM prodotto WHERE nome = ?";
 					SQL = "UPDATE prodotto SET nome = ? WHERE idProdotto = ?";
 					PreparedStatement ps2 = null;

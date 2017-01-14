@@ -267,13 +267,16 @@ public class OrdineManager {
 					idOrdine = rs4.getInt("id");
 				}
 				preparedStatement1 = conn.prepareStatement(SQL1);
+				
 				preparedStatement1.setInt(1, carrello.getId());
 				ResultSet rs1 = preparedStatement1.executeQuery();
+				int idProdottoCarrello = -1;
 				while(rs1.next()) { //mi prendo i prodotti dal carrello
 					ps2 = conn.prepareStatement(SQL2);
-					int idProdottoCarrello = -1;
+					
 					idProdottoCarrello = rs1.getInt("idProdottoCarrello");
-					if(idProdottoCarrello == -1) return null;
+					
+					
 					int quantit‡ = rs1.getInt("quantit‡Carrello");
 					ps2.setInt(1, idProdottoCarrello);
 					ResultSet rs2 = ps2.executeQuery(); //mi prendo il nome del prodotto
@@ -291,7 +294,7 @@ public class OrdineManager {
 					
 					}
 				}
-				
+				if(idProdottoCarrello == -1) return null;
 		} finally {
 			try {
 				if (preparedStatement1 != null && ps2 != null && ps3 != null && ps4 != null 
@@ -308,6 +311,7 @@ public class OrdineManager {
 					conn.close();
 			}
 		}
+		
 		Ordine ordine = new Ordine();
 		ordine.setId(idOrdine);
 		ordine.setStato("Da spedire");
@@ -347,6 +351,7 @@ public class OrdineManager {
 				int quantit‡ProdottoOrdine = rs1.getInt("quantit‡ProdottoOrdine");
 				int quantit‡ProdottoCatalogo = rs1.getInt("quantita");
 				int idProdotto =rs1.getInt("idProdotto");
+				
 				if(quantit‡ProdottoCatalogo < quantit‡ProdottoOrdine) {
 					flag = false; //quantit‡ indisponibile
 				}
@@ -361,7 +366,7 @@ public class OrdineManager {
 				flag = false; //iban non conforme
 			}
 			for (int i=0; i < iban.length(); i ++) {
-				if(!!Character.isWhitespace(iban.charAt(i))) {
+				if(!Character.isDigit(iban.charAt(i))) {
 					flag = false; 
 					
 				}

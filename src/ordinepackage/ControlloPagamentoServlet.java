@@ -27,7 +27,7 @@ public class ControlloPagamentoServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**Metodo che permette di concludere il pagamente e finalizzare l'ordine
+	/**Metodo che permette di concludere il pagamento e finalizzare l'ordine
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

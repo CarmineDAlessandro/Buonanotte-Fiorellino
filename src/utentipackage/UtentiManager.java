@@ -257,7 +257,7 @@ public class UtentiManager {
 
 			if (dato.length() > 40) return false;
 			for (int i=0; i < dato.length(); i ++) {
-				if(!Character.isLetter(dato.charAt(i)) && dato.charAt(i)!='\'') {
+				if(!Character.isLetter(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i)) && dato.charAt(i)!='\'') {
 					return false; 
 					
 
@@ -288,7 +288,7 @@ public class UtentiManager {
 
 			if (dato.length() > 40) return false;
 			for (int i=0; i < dato.length(); i ++) {
-				if(!Character.isLetter(dato.charAt(i)) && dato.charAt(i)!='\'') {
+				if(!Character.isLetter(dato.charAt(i)) && !Character.isWhitespace(dato.charAt(i)) && dato.charAt(i)!='\'') {
 					return false; 
 					
 
@@ -440,7 +440,7 @@ public class UtentiManager {
 
 				}
 			}
-			String SQL = " UPDATE utente SET civico = ? WHERE username = ?";
+			String SQL = " UPDATE utente SET numeroCivico = ? WHERE username = ?";
 			try {
 				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
@@ -567,7 +567,7 @@ public class UtentiManager {
 			provaStatement.setString(1, usr.getUsername());
 			ResultSet rs = provaStatement.executeQuery();
 			if (!rs.next()) {
-				conn = ds.getConnection();
+				conn = getConnection();
 
 				preparedStatement2 = conn.prepareStatement(insertSQL);
 				preparedStatement2.setString(1, usr.getNome());

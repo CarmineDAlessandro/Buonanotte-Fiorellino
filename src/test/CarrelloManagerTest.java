@@ -37,10 +37,10 @@ public class CarrelloManagerTest {
 	@Test
 	public void testAggiungiProdottoCarrello() throws SQLException {
 		boolean flag;
-		flag = model.aggiungiProdottoCarrello("roccomiele1", 1, 250); //aggiungo quantità eccessiva
+		flag = model.aggiungiProdottoCarrello("roccomiele1", 2, 250); //aggiungo quantità eccessiva
 		assertEquals(false,flag);
-		flag = model.aggiungiProdottoCarrello("roccomiele1", 1, 10); //aggiungo quantità eccessiva
-		assertEquals(false,flag);
+		flag = model.aggiungiProdottoCarrello("roccomiele1", 2, 10); //aggiungo quantità eccessiva
+		assertEquals(true,flag);
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class CarrelloManagerTest {
 		boolean flag;
 		flag = model.eliminaProdottoCarrello(3, "2"); //provo a cancellare un prodotto non presente
 		assertEquals(false,flag);
-		flag = model.eliminaProdottoCarrello(3, "1");
+		flag = model.eliminaProdottoCarrello(2,"8");
 		assertEquals(true,flag);
 	}
 

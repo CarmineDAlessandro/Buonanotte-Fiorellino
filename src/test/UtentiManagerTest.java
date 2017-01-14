@@ -19,7 +19,9 @@ public class UtentiManagerTest {
 
 	private UtentiManager model;
 	private Utente utenteEsistente;
+	private Utente utenteEsistente2;
 	private Utente utenteNonEsistente;
+	private Utente utenteNonEsistente2;
 	private Amministratore amministratoreEsistente;
 	private Amministratore amministratoreNonEsistente;
 	
@@ -30,18 +32,29 @@ public class UtentiManagerTest {
 
 		model = new UtentiManager();
 		Date date = new Date(90,0,15);
+		Date date2 = new Date(31,7,21);
 		utenteEsistente = new Utente("carmelo", "sottile", "carmelosottile@libero.it", 
 				"crmlstt993re138h", "roma", "salerno", "sa", "via libertas", "82034", 
 				"carmelosottile", "pinko", 24, date);
+		utenteEsistente2 = new Utente("alessandra","zullo","alex@libero.it","lkjhstt993re138h","roma","salerno","sa","via libertas","82034","alessandrazullo1","pinko",24,date2);
 		utenteNonEsistente = new Utente("marco", "sottile", "parco@mail.it", 
 				"pqmlstt993re138h", "roma", "salerno", "sa", "via marzo", "82034", 
 				"lollo870", "panicom", 24, date);
+		utenteNonEsistente2 = new Utente("marco", "sottile", "parco@mail.it", 
+				"pqmlstt993re138h", "roma", "salerno", "sa", "via marzo", "82034", 
+				"inzaghi", "panicom", 24, date);
 		amministratoreNonEsistente = new Amministratore("ale@gmail.com","alead","pablo");
 		amministratoreEsistente = new Amministratore("siani@outlook.it","pinko","pippo");
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		model = null;
+		utenteEsistente = null;
+		utenteNonEsistente = null;
+		utenteNonEsistente2 = null;
+		amministratoreEsistente = null;
+		amministratoreNonEsistente = null;
 	}
 
 	@Test
@@ -51,8 +64,8 @@ public class UtentiManagerTest {
 		u = model.loginUtente(utenteNonEsistente.getUsername(), utenteNonEsistente.getPassword());
 		assertNull(u.getUsername());
 		//test su account esistente
-		u = model.loginUtente(utenteEsistente.getUsername(), utenteEsistente.getPassword());
-		assertEquals(utenteEsistente, u);
+		u = model.loginUtente(utenteEsistente2.getUsername(), utenteEsistente2.getPassword());
+		assertEquals(utenteEsistente2.getUsername(), u.getUsername());
 	}
 
 	
@@ -132,13 +145,13 @@ public class UtentiManagerTest {
 		flag = model.ModificaUtente(utenteEsistente.getUsername(), "lucasdrubalevincentemariointerforeverciaomondohellowordl40caratteri@gmail.com", "eMail");
 		assertEquals(false,flag);
 		
-		flag = model.ModificaUtente(utenteEsistente.getUsername(), "sa", "provinca");
+		flag = model.ModificaUtente(utenteEsistente.getUsername(), "sa", "provincia");
 		assertEquals(true,flag);
 		
-		flag = model.ModificaUtente(utenteEsistente.getUsername(), "salerno", "provinca");
+		flag = model.ModificaUtente(utenteEsistente.getUsername(), "salerno", "provincia");
 		assertEquals(false,flag);
 		
-		flag = model.ModificaUtente(utenteEsistente.getUsername(), "s1", "provinca");
+		flag = model.ModificaUtente(utenteEsistente.getUsername(), "s1", "provincia");
 		assertEquals(false,flag);
 		
 		flag = model.ModificaUtente(utenteEsistente.getUsername(), "a. salsano", "via");
@@ -179,7 +192,7 @@ public class UtentiManagerTest {
 		assertEquals(false,flag);
 		
 		//registrazione con username non esistente
-		flag = model.registrazioneUtente(utenteNonEsistente);
+		flag = model.registrazioneUtente(utenteNonEsistente2);
 		assertEquals(true,flag);
 		
 	}
@@ -203,7 +216,7 @@ public class UtentiManagerTest {
 		assertNull(a.getUsername());
 		//test su account esistente
 		a = model.loginAmministratore(amministratoreEsistente.getUsername(), amministratoreEsistente.getPassword());
-		assertEquals(amministratoreEsistente, a);
+		assertEquals(amministratoreEsistente.getUsername(), a.getUsername());
 	}
 
 }

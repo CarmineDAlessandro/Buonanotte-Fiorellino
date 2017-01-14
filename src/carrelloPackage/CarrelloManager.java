@@ -140,7 +140,7 @@ public class CarrelloManager {
 			if(rs1.next()) {
 				numeroCarrello = rs1.getInt("numeroCarrello");
 			}
-			else {
+			else { //se non c'Ënel db, lo aggiungo
 				preparedStatement2 = conn.prepareStatement(SQL2);
 				preparedStatement2.setString(1, username);
 				preparedStatement2.executeUpdate();
@@ -160,6 +160,8 @@ public class CarrelloManager {
 				
 				String idProdottoS = ""+idProdotto;
 				flag = cambiaQuantit‡Carrello(numeroCarrello, quantit‡, idProdottoS);
+				
+				if(!flag) return false; // se la quantit‡ Ë eccessiva, non fa l'operazione
 				
 			}
 			else {

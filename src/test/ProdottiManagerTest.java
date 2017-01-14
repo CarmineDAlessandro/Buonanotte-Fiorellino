@@ -15,6 +15,7 @@ import prodottipackage.Prodotto;
 public class ProdottiManagerTest {
 	ProdottiManager model;
 	Prodotto p;
+	Prodotto p2;
 	Prodotto pNuovo;
 	Prodotto pNonEsiste;
 	
@@ -22,12 +23,18 @@ public class ProdottiManagerTest {
 	public void setUp() throws Exception {
 		model = new ProdottiManager();
 		p = new Prodotto(3, "viola", "./Immagini/viola.jpg", "la viola  ......", 140, 1.00);
+		p2 = new Prodotto(9, "tulipano", "./Immagini/tulipano.jpg","la tulipano  ......",140,0.55);
 		pNuovo = new Prodotto(4,"viola45","./Immagini/viola.jpg"," ......", 140, 1.00);
 		pNonEsiste = new Prodotto(174,"viola45","./Immagini/viola.jpg"," ......", 140, 1.00);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		model = null;
+		p = null;
+		p2 = null;
+		pNuovo = null;
+		pNonEsiste = null;
 	}
 
 	@Test
@@ -39,7 +46,7 @@ public class ProdottiManagerTest {
 	@Test
 	public void testAggiungiProdotto() throws SQLException {
 		boolean flag;
-		flag = model.aggiungiProdotto(p); //provo ad aggiungere un prodotto già esistente
+		flag = model.aggiungiProdotto(p2); //provo ad aggiungere un prodotto già esistente
 		assertEquals(false, flag);
 		//aggiungo un nuovo prodotto
 		flag = model.aggiungiProdotto(pNuovo);
