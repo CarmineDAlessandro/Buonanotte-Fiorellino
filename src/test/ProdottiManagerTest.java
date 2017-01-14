@@ -17,6 +17,7 @@ public class ProdottiManagerTest {
 	Prodotto p;
 	Prodotto pNuovo;
 	Prodotto pNonEsiste;
+	
 	@Before
 	public void setUp() throws Exception {
 		model = new ProdottiManager();

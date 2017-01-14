@@ -24,7 +24,7 @@
  	}
  %>
 				</a></li>
-				<li><a href="index.jsp?IdPage=8">Catalogo</a></li>
+				<li><a href="http://localhost:8080/Fiorazon/ElencoProdottiServlet">Catalogo</a></li>
 				<li><a href="index.jsp?IdPage=3">Fiorazon</a></li>
 			</ul>
 		</nav>

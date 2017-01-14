@@ -231,6 +231,5 @@
 	<%
 		}
 	%>
-	<%System.out.println(response.getStatus()); %>
 </body>
 </html>

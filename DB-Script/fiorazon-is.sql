@@ -55,7 +55,7 @@ CREATE TABLE ordine (
 CREATE TABLE prodottiOrdine (
 	idOrdine int not null,
 	idProdottoOrdine int not null,
-	quantit√†ProdottoOrdine int,
+	quantit‡ProdottoOrdine int,
 	prezzo double(15,2),
 	nomeProdottiOrdine varchar(30),
     constraint chiavePrimaria5 primary key (idOrdine, idProdottoOrdine),
@@ -73,7 +73,7 @@ CREATE TABLE carrello (
 CREATE TABLE prodottiCarrello (
 	numeroCarrello int not null,
     idProdottoCarrello int not null,
-	quantit√†Carrello int,
+	quantit‡Carrello int,
     constraint chiavePrimaria7 primary key (numeroCarrello, idProdottoCarrello),
 	constraint chiaveEsterna7 foreign key (numeroCarrello) references carrello(numeroCarrello) ON DELETE CASCADE ON UPDATE CASCADE,
 	constraint chiaveEsterna8 foreign key (idProdottoCarrello) references prodotto(idProdotto) ON DELETE CASCADE ON UPDATE CASCADE
@@ -116,7 +116,7 @@ values
 ('carmelosottile',26.7,'Spedito'),
 ('carmelosottile',77.7,'Da Spedire');
 
-insert into prodottiOrdine (idOrdine,idProdottoOrdine,quantit√†ProdottoOrdine,prezzo,nomeProdottiOrdine)
+insert into prodottiOrdine (idOrdine,idProdottoOrdine,quantit‡ProdottoOrdine,prezzo,nomeProdottiOrdine)
 values
 (1,10,4,10,'bocca di leone'),
 (1,1,30,10,'margherita'),
@@ -137,7 +137,7 @@ values
 ('carmelosottile'),
 ('roccomiele1');
 
-insert into prodottiCarrello(numeroCarrello,idProdottoCarrello,quantit√†Carrello)
+insert into prodottiCarrello(numeroCarrello,idProdottoCarrello,quantit‡Carrello)
 values
 (1,1,4),
 (1,2,7),

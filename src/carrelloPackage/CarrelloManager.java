@@ -1,6 +1,7 @@
 package carrelloPackage;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +31,33 @@ public class CarrelloManager {
 			System.out.println("Error:" + e.getMessage());
 		}
 	}
+	
+	private static Connection getConnection () throws SQLException {
+		if (ds != null)
+			return ds.getConnection();
+		else if (ds == null) {
+			String URL ="jdbc:mysql://localhost:3306";
+			String database ="fiorazon";
+				String driver = "com.mysql.jdbc.Driver";
+			String user ="root";
+			String password = "root";
+			
+			
+			try {
+				Class.forName(driver);
+				return  DriverManager.getConnection(URL + "/"+database,user,password);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+		}
+		return null;
+		
+	}
 
 	// __________________________________________________________________________________________________
 
@@ -54,7 +82,7 @@ public class CarrelloManager {
 		ArrayList<Prodotto> car = new ArrayList<Prodotto>();
 		Carrello carrello = new Carrello();
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 			preparedStatement1 = conn.prepareStatement(selectSQL);
 			preparedStatement1.setString(1, username);
 
@@ -105,7 +133,7 @@ public class CarrelloManager {
 		String SQL4 = "insert into prodotticarrello(numeroCarrello,idProdottoCarrello,"
 				+ "quantit‡Carrello) values(?,?,?)";
 		try { 
-			conn = ds.getConnection();
+			conn = getConnection();
 			preparedStatement1 = conn.prepareStatement(SQL1);
 			preparedStatement1.setString(1, username);
 			ResultSet rs1 =preparedStatement1.executeQuery();
@@ -177,7 +205,7 @@ public class CarrelloManager {
 		String SQL = "delete from prodotticarrello where numeroCarrello = ? and idProdottoCarrello = ?";
 		
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 			preparedStatement2 = conn.prepareStatement(prova);
 			preparedStatement2.setInt(1, idCarrello);
 			preparedStatement2.setInt(2, idProdottoInt);
@@ -222,7 +250,7 @@ public class CarrelloManager {
 		String SQL3=("update prodottiCarrello  set quantit‡Carrello = ? "
 				+ "where numeroCarrello = ? and idProdottoCarrello = ?");
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 			ps1 = conn.prepareStatement(SQL1);
 			ps1.setInt(1, idProdottoInt);
 			int quantit‡Disponibile=0;

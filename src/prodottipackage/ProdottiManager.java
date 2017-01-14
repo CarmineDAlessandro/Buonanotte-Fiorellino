@@ -1,6 +1,7 @@
 package prodottipackage;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +32,33 @@ public class ProdottiManager {
 		}
 	}
 
+	private static Connection getConnection () throws SQLException {
+		if (ds == null) {
+			String URL ="jdbc:mysql://localhost:3306";
+			String database ="fiorazon";
+				String driver = "com.mysql.jdbc.Driver";
+			String user = "root";
+			String password = "root";
+			
+			
+			try {
+				Class.forName(driver);
+				return  DriverManager.getConnection(URL + "/"+database,user,password);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+		} else if (ds != null) {
+			return ds.getConnection();
+		}
+		return null;
+		
+	}
+	
 	// _________________________________________________________________________________________
 	/**
 	 * Questo metodi ritorna una lista di tutti i prodotti presenti nel database
@@ -43,7 +71,7 @@ public class ProdottiManager {
 		String SQL1 = "select * from prodotto";
 		
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 			preparedStatement1 = conn.prepareStatement(SQL1);
 
 			ResultSet rs = preparedStatement1.executeQuery();
@@ -87,7 +115,7 @@ public class ProdottiManager {
 		// manca metodo per prendere immagine
 		String url = "./Immagini/";
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 			ps1b = conn.prepareStatement(prova);//per vedere se il prodotto già c'è
 			ps1b.setString(1, usr.getNome());
 			ResultSet rs = ps1b.executeQuery();
@@ -129,7 +157,7 @@ public class ProdottiManager {
 		String SQLprova ="SELECT * FROM Prodotto WHERE idProdotto = ?";
 		String selectSQL = "DELETE FROM Prodotto WHERE idProdotto = ?";
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 			ps2 = conn.prepareStatement(SQLprova);
 			ps2.setInt(1, idprodotto);
 			ResultSet rs = ps2.executeQuery();
@@ -217,7 +245,7 @@ public class ProdottiManager {
 			
 			if (flag == true) {
 				try {
-					conn = ds.getConnection();
+					conn = getConnection();
 
 					SQL = "UPDATE prodotto SET descrizione = ? WHERE idProdotto = ?";
 					
@@ -249,7 +277,7 @@ public class ProdottiManager {
 			
 			if (flag == true) {
 				try {
-					conn = ds.getConnection();
+					conn = getConnection();
 
 					SQL = "UPDATE prodotto SET prezzo = ? WHERE idProdotto = ?";
 					
@@ -280,7 +308,7 @@ public class ProdottiManager {
 				flag = false;
 			if (flag == true) {
 				try {
-					conn = ds.getConnection();
+					conn = getConnection();
 
 					SQL = "UPDATE prodotto SET quantita = ? WHERE idProdotto = ?";
 					
@@ -307,7 +335,7 @@ public class ProdottiManager {
 			}
 		} else if(action.equals("img")) {
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				String url = dato;
 				SQL = "UPDATE prodotto SET urlImmagine = ? WHERE idProdotto = ?";
 				
@@ -351,7 +379,7 @@ public class ProdottiManager {
 		String SQL1 = " select * from prodotto where prezzo >=  ?";
 		ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 
 			preparedStatement1 = conn.prepareStatement(SQL1);
 			preparedStatement1.setDouble(1, prezzo);
@@ -393,7 +421,7 @@ public class ProdottiManager {
 		String SQL1 = " select * from prodotto where prezzo <=  ?";
 		ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 
 			preparedStatement1 = conn.prepareStatement(SQL1);
 			preparedStatement1.setDouble(1, prezzo);
@@ -435,7 +463,7 @@ public class ProdottiManager {
 		String SQL1 = " select * from prodotto where nome =  ?";
 		ArrayList<Prodotto> lista = new ArrayList<Prodotto>();
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 
 			preparedStatement1 = conn.prepareStatement(SQL1);
 			preparedStatement1.setString(1, nome);

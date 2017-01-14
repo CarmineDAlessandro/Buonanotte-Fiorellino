@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.sql.DriverManager;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -33,6 +34,33 @@ public class UtentiManager {
 			System.out.println("Error:" + e.getMessage());
 		}
 	}
+	
+	private static Connection getConnection () throws SQLException {
+		if (ds != null)
+			return ds.getConnection();
+		else if (ds == null) {
+			String URL ="jdbc:mysql://localhost:3306";
+			String database ="fiorazon";
+				String driver = "com.mysql.jdbc.Driver";
+			String user ="root";
+			String password = "root";
+			
+			
+			try {
+				Class.forName(driver);
+				return  DriverManager.getConnection(URL + "/"+database,user,password);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
+		}
+		return null;
+		
+	}
 
 	// __________________________________________________________________________________________________
 	/**
@@ -46,7 +74,7 @@ public class UtentiManager {
 		String selectSQL = "select * from utente where username = ? and password = ?";
 		Utente usr = new Utente();
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 			
 			preparedStatement1 = conn.prepareStatement(selectSQL);
 			preparedStatement1.setString(1, username);
@@ -95,7 +123,7 @@ public class UtentiManager {
 		String SQL7b ="SELECT * FROM utente WHERE username = ?";
 		String SQL7 = " DELETE FROM utente WHERE username = ?";
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 			ps7b = conn.prepareStatement(SQL7b);
 			ps7b.setString(1, username);
 			ResultSet rs = ps7b.executeQuery();
@@ -145,7 +173,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET nome = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -176,7 +204,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET cognome = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -206,7 +234,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET codiceFiscale = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -237,7 +265,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET cittaNascita = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -268,7 +296,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET cittaResidenza = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -298,7 +326,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET cap = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -325,7 +353,7 @@ public class UtentiManager {
 				return false;
 			String SQL = " UPDATE utente SET eMail = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -355,7 +383,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET provincia = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -385,7 +413,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET via = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -414,7 +442,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET civico = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -444,7 +472,7 @@ public class UtentiManager {
 			}
 			String SQL = " UPDATE utente SET cap = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -469,7 +497,7 @@ public class UtentiManager {
 
 			String SQL = " UPDATE utente SET password = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				preparedStatement5.setString(1, dato);
 				preparedStatement5.setString(2, username);
@@ -495,7 +523,7 @@ public class UtentiManager {
 			
 			String SQL = " UPDATE utente SET dataNascita = ? WHERE username = ?";
 			try {
-				conn = ds.getConnection();
+				conn = getConnection();
 				preparedStatement5 = conn.prepareStatement(SQL);
 				
 				preparedStatement5.setDate(1, data_nascita);
@@ -534,7 +562,7 @@ public class UtentiManager {
 				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		String provaSQL = "SELECT username FROM utente WHERE username = ?";
 		try {
-			conn2 = ds.getConnection();
+			conn2 = getConnection();
 			provaStatement = conn2.prepareStatement(provaSQL);
 			provaStatement.setString(1, usr.getUsername());
 			ResultSet rs = provaStatement.executeQuery();
@@ -593,7 +621,7 @@ public class UtentiManager {
 		String selectSQL = "select * from amministratore where username = ? and password = ?";
 		Amministratore usr = new Amministratore();
 		try {
-			conn = ds.getConnection();
+			conn = getConnection();
 			preparedStatement1 = conn.prepareStatement(selectSQL);
 			preparedStatement1.setString(1, username);
 			preparedStatement1.setString(2, password);
