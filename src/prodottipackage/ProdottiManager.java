@@ -133,7 +133,10 @@ public class ProdottiManager {
 			ps2 = conn.prepareStatement(SQLprova);
 			ps2.setInt(1, idprodotto);
 			ResultSet rs = ps2.executeQuery();
-			if(rs.next()) return false;
+			if(!rs.next()) {
+				
+				return false;
+			}
 			preparedStatement1 = conn.prepareStatement(selectSQL);
 			preparedStatement1.setInt(1, idprodotto);
 			preparedStatement1.executeUpdate();

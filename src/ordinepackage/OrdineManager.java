@@ -182,8 +182,8 @@ public class OrdineManager {
 		try {
 			conn = ds.getConnection();
 			ps2 = conn.prepareStatement(prova);
-			ps2.setString(1, Stato);
-			ps2.setInt(2, idOrdine);
+			
+			ps2.setInt(1, idOrdine);
 			ResultSet rs = ps2.executeQuery();
 			if(!rs.next()) return false;
 			preparedStatement1 = conn.prepareStatement(SQL1);
@@ -309,6 +309,7 @@ public class OrdineManager {
 		String SQL2 = "update prodotto set quantita = ? where idProdotto = ?";
 		String SQL3 = "update ordine set iban = ?, prezzoTotale = ? where id = ? ";
 		String SQL4 = "delete from carrello where numeroCarrello = ?";
+		String SQL4bis = "select * from carrello where numeroCarrello = ?";
 		String SQL5 = "delete from ordine where id = ?";
 		try {
 			conn = ds.getConnection();
@@ -346,6 +347,7 @@ public class OrdineManager {
 				ps3.setDouble(2, prezzo);
 				ps3.setInt(3, ordine.getId());
 				ps3.executeUpdate();
+				
 				ps4 = conn.prepareStatement(SQL4); //cancella il carrello
 				ps4.setInt(1, carrello.getId());;
 				ps4.executeUpdate();
