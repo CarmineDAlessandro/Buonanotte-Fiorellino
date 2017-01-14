@@ -1,3 +1,5 @@
+package test;
+
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -14,16 +16,16 @@ public class CarrelloTest {
 	ArrayList<Prodotto> prodotti;
 	@Before
 	public void setUp() throws Exception {
-		carrello = new Carrello ();
 		prodotti = new ArrayList <Prodotto>();
-		carrello.setId(4);
-		carrello.setLista(prodotti);
-		carrello.setPrezzo(5);
+		
+		carrello = new Carrello (4,5,prodotti);
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		carrello = null;
+		prodotti = null;
 	}
 
 	@Test
@@ -63,4 +65,4 @@ public class CarrelloTest {
 }
 
 
-}
+

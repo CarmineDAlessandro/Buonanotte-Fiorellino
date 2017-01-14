@@ -47,7 +47,7 @@ public class UtentiManager {
 		Utente usr = new Utente();
 		try {
 			conn = ds.getConnection();
-			System.out.println("lo fa");
+			
 			preparedStatement1 = conn.prepareStatement(selectSQL);
 			preparedStatement1.setString(1, username);
 			preparedStatement1.setString(2, password);
@@ -80,7 +80,7 @@ public class UtentiManager {
 					conn.close();
 			}
 		}
-		System.out.println(usr.getUsername());
+		
 		return usr;
 	}
 
@@ -88,21 +88,31 @@ public class UtentiManager {
 	 * Questo metodo permette di eliminare un utente presente nel database. Ha
 	 * come valore in input l'username dell'utente da eliminare
 	 */
-	public void eliminaUtente(String username) throws SQLException {
+	public boolean eliminaUtente(String username) throws SQLException {
+		boolean flag = true;
 		Connection conn = null;
-		PreparedStatement preparedStatement7 = null;
-
+		PreparedStatement preparedStatement7 = null,ps7b=null;
+		String SQL7b ="SELECT * FROM utente WHERE username = ?";
 		String SQL7 = " DELETE FROM utente WHERE username = ?";
 		try {
 			conn = ds.getConnection();
+			ps7b = conn.prepareStatement(SQL7b);
+			ps7b.setString(1, username);
+			ResultSet rs = ps7b.executeQuery();
+			if(!rs.next()) {
+				flag = false;
+			}
+			if (flag) {
 			preparedStatement7 = conn.prepareStatement(SQL7);
 			preparedStatement7.setString(1, username);
 			preparedStatement7.execute();
+			}
 
 		} finally {
 			try {
 
-				if (preparedStatement7 != null) {
+				if (preparedStatement7 != null && ps7b !=null) {
+					ps7b.close();
 					preparedStatement7.close();
 				}
 			} finally {
@@ -111,7 +121,7 @@ public class UtentiManager {
 
 			}
 		}
-
+		return flag;
 	}
 
 	/**
@@ -479,6 +489,7 @@ public class UtentiManager {
 
 		}
 		if (action.equals("data")) {
+			
 			Date data_nascita = Date.valueOf(dato);;
 			
 			

@@ -41,10 +41,12 @@ public class ControlloInserisciProdottoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean flag = true;
+		
 		String img = request.getParameter("img");
 		
 		request.removeAttribute("img");
 		String nome = request.getParameter("nome");
+		System.out.println(nome);
 		if (nome.length() > 30)
 			flag = false;
 		for (int i = 0; i < nome.length(); i++) {
@@ -82,7 +84,7 @@ public class ControlloInserisciProdottoServlet extends HttpServlet {
 		ProdottiManager model = new ProdottiManager();
 		if (flag) {
 			try {
-				model.aggiungiProdotto(bean);
+				flag = model.aggiungiProdotto(bean);
 			} catch (SQLException e) {
 				/*arriva qui se non ha potuto aggiungere il prodotto*/
 				response.setStatus(HttpServletResponse.
@@ -93,6 +95,7 @@ public class ControlloInserisciProdottoServlet extends HttpServlet {
 				return;
 			}
 			/*arriva qui se è andato tutto bene*/
+			if(!flag) response.setStatus(HttpServletResponse.SC_PRECONDITION_FAILED); //se c'è un prodotto con lo stesso nome
 			RequestDispatcher dispatcher = getServletContext().
 					getRequestDispatcher("/index.jsp?IdPage=8");
 			dispatcher.forward(request, response);

@@ -162,7 +162,7 @@
 		%>
 		<div id="insert">
 			<h4>Inserisci un nuovo prodotto</h4>
-			<form action="ControlloInserisciProdottoServlet" method="post" ENCTYPE="multipart/form-data">
+			<form action="ControlloInserisciProdottoServlet" method="post" >
 
 				<table id="table-insert">
 					<tr>
@@ -213,7 +213,7 @@
 		if (response.getStatus() == HttpServletResponse.SC_PRECONDITION_FAILED) {
 	%>
 	<script>
-		alert("Parametri formalmente scorretti");
+		alert("Parametri formalmente scorretti, oppure prodotto già esistente. Si prega di ricontrollare.");
 	</script>
 	<%
 		} else if (response.getStatus() == HttpServletResponse.SC_INTERNAL_SERVER_ERROR) {

@@ -44,7 +44,7 @@ public class ControlloLoginUtenteServlet extends HttpServlet {
 			
 			if (user != null && password != null) {
 				HttpSession session = request.getSession();
-				session.removeAttribute("utente");
+				
 				try {
 					
 					session.setAttribute("utente", model.loginUtente(user,password));

@@ -8,4 +8,7 @@
 		username="root"
 		password="root"
 		url="jdbc:mysql://localhost:3306/fiorazon"/>
+	 <ResourceLink global="jdbc/fiorazon" 
+	 	name="jdbc/fiorazon" 
+	 	type="javax.sql.DataSource" />
 </Context>

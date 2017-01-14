@@ -169,15 +169,20 @@ public class CarrelloManager {
 	/**Questo metodo elimina un prodotto dal carrello.
 	 * Ha come parametri l'username dell'utente a cui si riferisce il carrello
 	 * e l'id del prodotto da rimuovere*/
-	public void eliminaProdottoCarrello (int idCarrello, String idProdotto) throws SQLException  {
+	public boolean eliminaProdottoCarrello (int idCarrello, String idProdotto) throws SQLException  {
 		Connection conn = null;
 		PreparedStatement preparedStatement1 = null,preparedStatement2 = null;
 		int idProdottoInt = Integer.parseInt(idProdotto);
-		
+		String prova = "select * from prodotticarrello where numeroCarrello = ? and idProdottoCarrello = ?";
 		String SQL = "delete from prodotticarrello where numeroCarrello = ? and idProdottoCarrello = ?";
 		
 		try {
 			conn = ds.getConnection();
+			preparedStatement2 = conn.prepareStatement(prova);
+			preparedStatement2.setInt(1, idCarrello);
+			preparedStatement2.setInt(2, idProdottoInt);
+			ResultSet rs = preparedStatement2.executeQuery();
+			if(!rs.next()) return false;
 			preparedStatement1 = conn.prepareStatement(SQL);
 			preparedStatement1.setInt(1, idCarrello);
 			preparedStatement1.setInt(2, idProdottoInt);
@@ -185,8 +190,8 @@ public class CarrelloManager {
 		
 		} finally {
 			try {
-				if (preparedStatement1 != null ) {
-				
+				if (preparedStatement1 != null && preparedStatement2 != null) {
+					preparedStatement2.close();
 					preparedStatement1.close();
 				}
 			} finally {
@@ -194,6 +199,7 @@ public class CarrelloManager {
 					conn.close();
 			}
 		}
+		return true;
 	}
 	/**
 	 * Questo metodo cambia la quantità di un prodotto dal carrello.

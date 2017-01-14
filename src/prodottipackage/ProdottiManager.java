@@ -77,36 +77,45 @@ public class ProdottiManager {
 	 * Questo metodo permette di aggiungere un nuovo prodotto nel database. Ha
 	 * come parametro il prodotto da aggiungere nel database
 	 */
-	public void aggiungiProdotto(Prodotto usr) throws SQLException {
+	public boolean aggiungiProdotto(Prodotto usr) throws SQLException {
+		boolean flag = true;
 		Connection conn = null;
-		PreparedStatement preparedStatement1 = null;
-
+		PreparedStatement preparedStatement1 = null,ps1b = null;
+		String prova = "select * from prodotto where nome = ?";
 		String SQL1 = "insert into prodotto (urlImmagine,nome,quantita,descrizione,prezzo)values (?,?,?,?,?)";
 
 		// manca metodo per prendere immagine
 		String url = "./Immagini/";
 		try {
 			conn = ds.getConnection();
-
+			ps1b = conn.prepareStatement(prova);//per vedere se il prodotto già c'è
+			ps1b.setString(1, usr.getNome());
+			ResultSet rs = ps1b.executeQuery();
+			if(rs.next()) {
+				flag = false;
+			}
+			if(flag) {
 			preparedStatement1 = conn.prepareStatement(SQL1);
-			preparedStatement1.setString(1, usr.getUrlImmagine());
+			preparedStatement1.setString(1, url+usr.getUrlImmagine());
 			preparedStatement1.setString(2, usr.getNome());
 			preparedStatement1.setInt(3, usr.getQuantita());
 			preparedStatement1.setString(4, usr.getDescrizione());
 			preparedStatement1.setDouble(5, usr.getPrezzo());
 
 			preparedStatement1.executeUpdate();
-
+			}
 		} finally {
 			try {
-				if (preparedStatement1 != null) {
+				if (preparedStatement1 != null && ps1b != null) {
 					preparedStatement1.close();
+					ps1b.close();
 				}
 			} finally {
 				if (conn != null)
 					conn.close();
 			}
 		}
+		return flag;
 	}
 
 	// ________________________________________________________________________________________________
@@ -114,12 +123,17 @@ public class ProdottiManager {
 	 * Questo metodo permette di rimuovere un prodotto dal database. Ha come
 	 * parametro l'id del prodotto da rimuovere
 	 */
-	public void eliminaProdotto(int idprodotto) throws SQLException {
+	public boolean eliminaProdotto(int idprodotto) throws SQLException {
 		Connection conn = null;
-		PreparedStatement preparedStatement1 = null;
+		PreparedStatement preparedStatement1 = null,ps2=null;
+		String SQLprova ="SELECT * FROM Prodotto WHERE idProdotto = ?";
 		String selectSQL = "DELETE FROM Prodotto WHERE idProdotto = ?";
 		try {
 			conn = ds.getConnection();
+			ps2 = conn.prepareStatement(SQLprova);
+			ps2.setInt(1, idprodotto);
+			ResultSet rs = ps2.executeQuery();
+			if(rs.next()) return false;
 			preparedStatement1 = conn.prepareStatement(selectSQL);
 			preparedStatement1.setInt(1, idprodotto);
 			preparedStatement1.executeUpdate();
@@ -133,7 +147,7 @@ public class ProdottiManager {
 					conn.close();
 			}
 		}
-
+		return true;
 	}
 
 	// _________________________________________________________________________________________________
@@ -163,9 +177,13 @@ public class ProdottiManager {
 			if (flag == true) {
 				try {
 					conn = ds.getConnection();
-
+					String SQL2 = "SELECT * FROM prodotto WHERE nome = ?";
 					SQL = "UPDATE prodotto SET nome = ? WHERE idProdotto = ?";
-					
+					PreparedStatement ps2 = null;
+					ps2 = conn.prepareStatement(SQL2);
+					ps2.setString(1, nome);
+					ResultSet rs = ps2.executeQuery();
+					if(rs.next()) return false;
 					preparedStatement = conn.prepareStatement(SQL);
 
 					preparedStatement.setString(1, nome);

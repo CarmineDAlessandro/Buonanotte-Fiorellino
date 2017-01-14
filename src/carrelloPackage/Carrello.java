@@ -21,6 +21,17 @@ public class Carrello {
 	public Carrello () {
 		prezzo = 0;
 	}
+	/**
+	 * Questo costruttore crea un carrrello già settato.
+	 * @param unId setta l'id del carrello
+	 * @param unPrezzo setta il prezzo del carrello
+	 * @param unaLista setta la lista dei prodotti del carrelo
+	 */
+	public Carrello (int unId, double unPrezzo, ArrayList<Prodotto> unaLista) {
+		id = unId;
+		prezzo = unPrezzo;
+		lista = unaLista;
+	}
 
 
 

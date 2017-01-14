@@ -174,22 +174,26 @@ public class OrdineManager {
 	// avanza stato
 	/**Questo metodo cambia lo stato di spedizione di un ordine. Ha 
 	 * come parametri il nuovo stato e l'id dell'ordine da modificare*/
-	public void avanzaStato(String Stato, int idOrdine) throws SQLException {
+	public boolean avanzaStato(String Stato, int idOrdine) throws SQLException {
 		Connection conn = null;
-		PreparedStatement preparedStatement1 = null;
-		
+		PreparedStatement preparedStatement1 = null,ps2=null;
+		String prova= "select * from ordine where id = ?";
 		String SQL1 = "update ordine set stato = ? where id = ? ";
 		try {
 			conn = ds.getConnection();
-
+			ps2 = conn.prepareStatement(prova);
+			ps2.setString(1, Stato);
+			ps2.setInt(2, idOrdine);
+			ResultSet rs = ps2.executeQuery();
+			if(!rs.next()) return false;
 			preparedStatement1 = conn.prepareStatement(SQL1);
 			preparedStatement1.setString(1, Stato);
 			preparedStatement1.setInt(2, idOrdine);
 			preparedStatement1.executeUpdate();
 		} finally {
 			try {
-				if (preparedStatement1 != null && preparedStatement1 != null) {
-
+				if (preparedStatement1 != null && ps2 != null) {
+					ps2.close();
 					preparedStatement1.close();
 				}
 			} finally {
@@ -197,6 +201,7 @@ public class OrdineManager {
 					conn.close();
 			}
 		}
+		return true;
 	}
 	/**
 	 * Questo metodo crea un ordine a partire da un carrello.
@@ -239,7 +244,9 @@ public class OrdineManager {
 				ResultSet rs1 = preparedStatement1.executeQuery();
 				while(rs1.next()) { //mi prendo i prodotti dal carrello
 					ps2 = conn.prepareStatement(SQL2);
-					int idProdottoCarrello = rs1.getInt("idProdottoCarrello");
+					int idProdottoCarrello = -1;
+					idProdottoCarrello = rs1.getInt("idProdottoCarrello");
+					if(idProdottoCarrello == -1) return null;
 					int quantit‡ = rs1.getInt("quantit‡Carrello");
 					ps2.setInt(1, idProdottoCarrello);
 					ResultSet rs2 = ps2.executeQuery(); //mi prendo il nome del prodotto
@@ -254,6 +261,7 @@ public class OrdineManager {
 						String nome = rs2.getString("nome");
 						ps5.setString(5, nome);
 						ps5.executeUpdate();
+					
 					}
 				}
 				
