@@ -32,6 +32,8 @@ public class CarrelloManagerTest {
 		Carrello c;
 		c = model.getCarrello("roccomiele1");
 		assertNotNull(c);
+		c = model.getCarrello("utentenonesistente");
+		assertNull(c);
 	}
 
 	@Test

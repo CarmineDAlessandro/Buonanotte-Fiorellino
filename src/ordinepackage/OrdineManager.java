@@ -270,7 +270,7 @@ public class OrdineManager {
 				
 				preparedStatement1.setInt(1, carrello.getId());
 				ResultSet rs1 = preparedStatement1.executeQuery();
-				int idProdottoCarrello = -1;
+				int idProdottoCarrello = -1;//mi serve per testare se un ordine non esiste
 				while(rs1.next()) { //mi prendo i prodotti dal carrello
 					ps2 = conn.prepareStatement(SQL2);
 					
