@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<% session.setAttribute("id", request.getParameter("id")); %>
+<% String idS = (String)(session.getAttribute("id")); %>
+<% int idImg = Integer.parseInt(idS); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,9 +87,8 @@
 				</td>
 			</tr>
 		</form>
-		<form action="ControlloModificaProdottoServlet" method="post">
-		<input type="hidden" name="action" value="img">
-		<input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+		<form action="ControlloModificaProdottoServlet?action=img" method="post" enctype="multipart/form-data">
+	
 			<tr>
 				<td>
 					<label for="dato">Immagine:</label>

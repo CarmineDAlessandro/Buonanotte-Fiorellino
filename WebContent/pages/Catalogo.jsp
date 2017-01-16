@@ -162,7 +162,7 @@
 		%>
 		<div id="insert">
 			<h4>Inserisci un nuovo prodotto</h4>
-			<form action="ControlloInserisciProdottoServlet" method="post" >
+			<form action="ControlloInserisciProdottoServlet" method="post" enctype="multipart/form-data">
 
 				<table id="table-insert">
 					<tr>

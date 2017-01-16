@@ -112,8 +112,8 @@ public class ProdottiManager {
 		String prova = "select * from prodotto where nome = ?";
 		String SQL1 = "insert into prodotto (urlImmagine,nome,quantita,descrizione,prezzo)values (?,?,?,?,?)";
 
-		// manca metodo per prendere immagine
-		String url = "./Immagini/";
+	
+		
 		try {
 			conn = getConnection();
 			ps1b = conn.prepareStatement(prova);//per vedere se il prodotto già c'è
@@ -124,7 +124,7 @@ public class ProdottiManager {
 			}
 			if(flag) {
 			preparedStatement1 = conn.prepareStatement(SQL1);
-			preparedStatement1.setString(1, url+usr.getUrlImmagine());
+			preparedStatement1.setString(1, usr.getUrlImmagine());
 			preparedStatement1.setString(2, usr.getNome());
 			preparedStatement1.setInt(3, usr.getQuantita());
 			preparedStatement1.setString(4, usr.getDescrizione());

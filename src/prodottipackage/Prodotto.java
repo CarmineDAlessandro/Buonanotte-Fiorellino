@@ -3,6 +3,7 @@ package prodottipackage;
 /**Questa è la classe bean del prodotto, contiene tutte le informazioni
  * relative al prodotto*/
 public class Prodotto {
+	
 	/**Questo attributo è il nome del prodotto.
 	 * è reso accessibile tramite metodi get e set*/
 	private String  nome;
