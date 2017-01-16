@@ -89,7 +89,7 @@ public class ProdottiManagerTest {
 		flag = model.modificaProdotto(p.getIdProdotto(), "0", "quantità");
 		assertEquals(false, flag);
 		
-		flag = model.modificaProdotto(p.getIdProdotto(), "url", "img");
+		flag = model.modificaProdotto(p.getIdProdotto(), "./Immagini/viola.jpg", "img");
 		assertEquals(true,flag);
 		
 	}
